@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="{{ request.locale.iso_code }}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  {%- if page_title -%}
+    <title>{{ page_title }} — OSISS™</title>
+  {%- else -%}
+    <title>{{ shop.name }} — Innovative Dermatology-Driven Skincare</title>
+  {%- endif -%}
+
+  {%- if page_description -%}
+    <meta name="description" content="{{ page_description | escape }}">
+  {%- else -%}
+    <meta name="description" content="OSISS™ — Science-backed skincare powered by dermatology. PCSIR Tested, DRAP Compliant, GMP Certified. Proudly made in Pakistan.">
+  {%- endif -%}
+
+  <meta property="og:site_name" content="{{ shop.name }}">
+  <meta property="og:url" content="{{ canonical_url }}">
+  <meta property="og:title" content="{{ page_title | default: shop.name }}">
+  <meta property="og:type" content="website">
+  {%- if page_image -%}
+    <meta property="og:image" content="{{ page_image | img_url: 'master' }}">
+  {%- endif -%}
+  <meta property="og:description" content="{{ page_description | default: shop.description | escape }}">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{{ page_title | default: shop.name }}">
+  <meta name="twitter:description" content="{{ page_description | default: shop.description | escape }}">
+
+  <link rel="canonical" href="{{ canonical_url }}">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,700&display=swap" rel="stylesheet">
+
+  {{ 'theme.css' | asset_url | stylesheet_tag }}
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Osiss",
+    "alternateName": "OSISS™",
+    "url": "{{ shop.url }}",
+    "logo": "{{ 'osiss-logo.png' | asset_url }}",
+    "description": "OSISS™ is a dermatology-driven skincare brand from Pakistan. PCSIR Tested, DRAP Compliant, GMP Certified and Cruelty-Free.",
+    "foundingLocation": {
+      "@type": "Place",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Lahore",
+        "addressCountry": "PK"
+      }
+    },
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "telephone": "+923021345111",
+      "contactType": "customer service",
+      "availableLanguage": ["English", "Urdu"]
+    },
+    "sameAs": [
+      "https://www.instagram.com/osiss.pk"
+    ]
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "OSISS™",
+    "url": "{{ shop.url }}",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": {
+        "@type": "EntryPoint",
+        "urlTemplate": "{{ shop.url }}/search?q={search_term_string}"
+      },
+      "query-input": "required name=search_term_string"
+    }
+  }
+  </script>
+
+  {{ content_for_header }}
+</head>
+
+<body class="template-{{ template.name }}">
+
+  {%- sections 'header' -%}
+
+  <main id="main-content" role="main">
+    {{ content_for_layout }}
+  </main>
+
+  {%- sections 'footer' -%}
+
+  {%- render 'cart-panel' -%}
+  {%- render 'wishlist-panel' -%}
+  {%- render 'quick-view' -%}
+
+  <a href="https://wa.me/{{ settings.whatsapp_number | default: '923021345111' }}"
+     target="_blank"
+     rel="noopener noreferrer"
+     class="wa-float"
+     aria-label="Chat on WhatsApp">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+      <path d="M12 0C5.373 0 0 5.373 0 12c0 2.124.557 4.115 1.529 5.844L.057 23.927l6.235-1.634A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.787 9.787 0 01-5.34-1.576l-.383-.227-3.7.97.988-3.608-.249-.396A9.788 9.788 0 012.182 12C2.182 6.567 6.567 2.182 12 2.182 17.433 2.182 21.818 6.567 21.818 12S17.433 21.818 12 21.818z"/>
+    </svg>
+    <span>Expert Advice</span>
+  </a>
+
+  <script src="{{ 'theme.js' | asset_url }}" defer></script>
+</body>
+</html>
