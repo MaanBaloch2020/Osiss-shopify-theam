@@ -1,0 +1,144 @@
+<section class="bna-sec" aria-labelledby="bna-title">
+  <div class="wrap">
+
+    <p class="sec-eyebrow">{{ section.settings.eyebrow | default: 'CLINICAL RESULTS' }}</p>
+    <h2 class="sec-ttl" id="bna-title">{{ section.settings.title | default: 'VISIBLE RESULTS — BEFORE & AFTER' }}</h2>
+    <div class="sec-rule" aria-hidden="true"></div>
+
+    <div class="sl-wrap" id="bnaWrap" role="region" aria-label="Before and after results">
+      <button class="sl-arrow prev" id="bnaPrev" aria-label="Previous result">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+
+      <div class="sl-track" id="bnaTrack" role="list">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'result_card' -%}\
+          <div class="bna-card" role="listitem" {{ block.shopify_attributes }}>
+
+            <div class="bna-pair">
+              <div class="bna-img-item before">
+                {%- if block.settings.before_image -%}
+                  <img src="{{ block.settings.before_image | img_url: '400x400', crop: 'center' }}" alt="Before" loading="lazy">
+                {%- else -%}
+                  <div class="placeholder-img">Before</div>
+                {%- endif -%}
+                <span class="bna-tag">BEFORE</span>
+              </div>
+              
+              <div class="bna-img-item after">
+                {%- if block.settings.after_image -%}
+                  <img src="{{ block.settings.after_image | img_url: '400x400', crop: 'center' }}" alt="After" loading="lazy">
+                {%- else -%}
+                  <div class="placeholder-img">After</div>
+                {%- endif -%}
+                <span class="bna-tag">AFTER</span>
+              </div>
+            </div>
+
+            <div class="bna-info">
+              <div class="bna-badge">{{ block.settings.timeframe | default: '4-week' }} Results</div>
+              <h3 class="bna-product-ttl">{{ block.settings.product_name }}</h3>
+              <p class="bna-claim">"{{ block.settings.result_claim }}"</p>
+              <p class="bna-concern">Concern: {{ block.settings.skin_concern }}</p>
+              
+              {%- if block.settings.show_cta -%}
+                <a href="{{ block.settings.cta_url | default: '/collections/all' }}" class="bna-shop-link">Shop Product →</a>
+              {%- endif -%}
+            </div>
+
+          </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+
+      <button class="sl-arrow next" id="bnaNext" aria-label="Next result">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+    </div>
+
+    <div class="sl-dots" id="bnaDots"></div>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Before & After Results",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow text",
+      "default": "CLINICAL RESULTS"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section title",
+      "default": "VISIBLE RESULTS — BEFORE & AFTER"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "result_card",
+      "name": "Result Card",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "before_image",
+          "label": "Before Image"
+        },
+        {
+          "type": "image_picker",
+          "id": "after_image",
+          "label": "After Image"
+        },
+        {
+          "type": "text",
+          "id": "product_name",
+          "label": "Product name",
+          "default": "Revitalizing Face Serum"
+        },
+        {
+          "type": "text",
+          "id": "result_claim",
+          "label": "Result claim",
+          "default": "Visible reduction in dark spots"
+        },
+        {
+          "type": "text",
+          "id": "timeframe",
+          "label": "Timeframe (e.g. 4-week)",
+          "default": "4-week"
+        },
+        {
+          "type": "text",
+          "id": "skin_concern",
+          "label": "Skin concern",
+          "default": "Hyperpigmentation"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_cta",
+          "label": "Show Shop Link",
+          "default": true
+        },
+        {
+          "type": "url",
+          "id": "cta_url",
+          "label": "CTA Link URL"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Before & After Results",
+      "blocks": [
+        { "type": "result_card" },
+        { "type": "result_card" }
+      ]
+    }
+  ]
+}
+{% endschema %}
