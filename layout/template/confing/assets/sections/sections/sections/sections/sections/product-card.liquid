@@ -1,0 +1,112 @@
+```liquid
+{% comment %}
+  Snippet: product-card.liquid
+  Usage: {% render 'product-card', product: product, show_badge: true %}
+  Accepts:
+    - product: product object (required)
+    - show_badge: boolean (optional, default true)
+    - card_class: string CSS class (optional)
+{% endcomment %}
+
+{%- liquid
+  assign show_badge = show_badge | default: true
+  assign card_class = card_class | default: ''
+  assign product_url = product.url | within: collection
+-%}
+
+<div class="pcard {{ card_class }}" data-product-id="{{ product.id }}">
+
+  <!-- Image -->
+  <a href="{{ product_url }}" class="pimg-wrap" aria-label="View {{ product.title }}">
+    {%- if product.featured_image != blank -%}
+      <img
+        src="{{ product.featured_image | img_url: '400x400', crop: 'center' }}"
+        alt="{{ product.featured_image.alt | default: product.title | escape }}"
+        class="prod-img"
+        loading="lazy"
+        width="400"
+        height="400"
+      >
+    {%- else -%}
+      <div class="pimg-placeholder" aria-hidden="true">
+        <svg width="60" height="80" viewBox="0 0 60 80" fill="none">
+          <rect width="60" height="80" fill="#f0f0f0" rx="4"/>
+          <text x="30" y="42" text-anchor="middle" font-family="Montserrat,sans-serif" font-size="7" font-weight="700" fill="#ccc" letter-spacing="1">OSISS</text>
+        </svg>
+      </div>
+    {%- endif -%}
+
+    {%- if show_badge -%}
+      {%- if product.tags contains 'bestseller' -%}
+        <span class="pbadge bestseller" aria-label="Best Seller">BEST SELLER</span>
+      {%- elsif product.tags contains 'featured' -%}
+        <span class="pbadge featured" aria-label="Featured">FEATURED</span>
+      {%- elsif product.tags contains 'new' -%}
+        <span class="pbadge newarrival" aria-label="New Arrival">NEW</span>
+      {%- elsif product.tags contains 'sale' -%}
+        <span class="pbadge featured" aria-label="Sale">SALE</span>
+      {%- endif -%}
+    {%- endif -%}
+  </a>
+
+  <!-- Card body -->
+  <div class="pcard-body">
+
+    <!-- Stars -->
+    {%- if settings.show_star_ratings -%}
+      <div class="stars" role="img" aria-label="5 star rating">
+        {%- assign star_count = product.metafields.reviews.rating.value | default: 5 | floor -%}
+        {%- for i in (1..5) -%}
+          {%- if i <= star_count -%}
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="#f5a623" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          {%- else -%}
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="#e0e0e0" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    <p class="pname">{{ product.title | upcase | truncate: 40 }}</p>
+    <p class="psub">{{ product.type }}</p>
+
+    <!-- Price -->
+    <div class="pprice">
+      {%- if product.compare_at_price > product.price -%}
+        <span style="text-decoration:line-through;color:#aaa;font-size:9.5px;margin-right:5px">
+          PKR {{ product.compare_at_price | money_without_currency }}
+        </span>
+        <span>PKR {{ product.price | money_without_currency }}</span>
+        {%- if settings.show_savings_percent -%}
+          {%- assign saving_pct = product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price -%}
+          <span class="savings-pct">{{ saving_pct }}% OFF</span>
+        {%- endif -%}
+      {%- else -%}
+        <span>PKR {{ product.price | money_without_currency }}</span>
+      {%- endif -%}
+    </div>
+
+    <!-- Patch note / USP -->
+    {%- if product.metafields.custom.patch_note != blank -%}
+      <p class="patch-note">{{ product.metafields.custom.patch_note }}</p>
+    {%- else -%}
+      <p class="patch-note">✓ Dermatologist Tested &nbsp;·&nbsp; ✓ All Skin Types</p>
+    {%- endif -%}
+
+  </div><!-- /pcard-body -->
+
+  <!-- Add to Cart -->
+  {%- form 'product', product, data-type: 'add-to-cart-form' -%}
+    <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+    {%- if product.available -%}
+      <button type="submit" class="btn-atc" aria-label="Add {{ product.title }} to cart">
+        ADD TO CART
+      </button>
+    {%- else -%}
+      <button type="button" class="btn-atc" disabled aria-label="{{ product.title }} is sold out" style="background:#ccc;cursor:not-allowed">
+        SOLD OUT
+      </button>
+    {%- endif -%}
+  {%- endform -%}
+
+</div>
+```
