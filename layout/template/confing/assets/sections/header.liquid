@@ -1,0 +1,309 @@
+```liquid
+<!-- ══ SALE COUNTDOWN STRIP ══ -->
+{%- if section.settings.show_sale_strip -%}
+<div class="sale-strip" role="banner" aria-label="Sale announcement">
+  <div class="sale-strip-inner">
+    <span class="sale-fire" aria-hidden="true">🔥</span>
+    <span class="sale-text">{{ section.settings.sale_text }}</span>
+    <div class="sale-clock" aria-label="Countdown timer" role="timer">
+      <div class="sale-unit"><span class="sale-num" id="saleHH">47</span><span class="sale-lbl">HRS</span></div>
+      <span class="sale-colon">:</span>
+      <div class="sale-unit"><span class="sale-num" id="saleMM">59</span><span class="sale-lbl">MIN</span></div>
+      <span class="sale-colon">:</span>
+      <div class="sale-unit"><span class="sale-num" id="saleSS">00</span><span class="sale-lbl">SEC</span></div>
+    </div>
+    <span class="sale-offer">{{ section.settings.sale_offer | default: 'Up to' }} <strong>{{ section.settings.sale_discount | default: '25% OFF' }}</strong></span>
+    <a href="{{ section.settings.sale_btn_url | default: '/collections/all' }}" class="sale-shop-btn">
+      {{ section.settings.sale_btn_label | default: 'SHOP NOW' }}
+    </a>
+  </div>
+</div>
+{%- endif -%}
+
+<!-- ══ ANNOUNCE TICKER ══ -->
+{%- if section.settings.show_ticker -%}
+<div class="announce" role="marquee" aria-label="Announcements">
+  <div class="ticker-wrap">
+    <div class="ticker-track">
+      {%- assign items = section.settings.ticker_text | split: '|' -%}
+      {%- for i in (1..2) -%}
+        {%- for item in items -%}
+          <span class="tick-item">{{ item | strip }}</span>
+          <span class="tick-sep" aria-hidden="true">✦</span>
+        {%- endfor -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+{%- endif -%}
+
+<!-- ══ SITE HEADER ══ -->
+<header class="site-header" role="banner" id="siteHeader">
+  <div class="hdr-inner">
+
+    <!-- LEFT: Hamburger + Desktop Nav -->
+    <div class="hdr-left">
+      <button class="burger" id="burgerBtn" aria-label="Open navigation menu" aria-expanded="false" aria-controls="drawerPanel">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+      </button>
+      <nav class="desk-nav" aria-label="Main navigation">
+        <a href="{{ section.settings.nav_link_1_url | default: '/collections/all' }}" class="desk-lnk">{{ section.settings.nav_link_1 | default: 'Shop All' }}</a>
+        <a href="{{ section.settings.nav_link_2_url | default: '/collections/face' }}" class="desk-lnk">{{ section.settings.nav_link_2 | default: 'Face' }}</a>
+        <a href="{{ section.settings.nav_link_3_url | default: '/collections/sun-care' }}" class="desk-lnk">{{ section.settings.nav_link_3 | default: 'Sun Care' }}</a>
+        <a href="{{ section.settings.nav_link_4_url | default: '/collections/hair' }}" class="desk-lnk">{{ section.settings.nav_link_4 | default: 'Hair' }}</a>
+        <a href="{{ section.settings.nav_link_5_url | default: '/pages/about' }}" class="desk-lnk">{{ section.settings.nav_link_5 | default: 'Our Story' }}</a>
+      </nav>
+    </div>
+
+    <!-- CENTER: Logo -->
+    <div class="hdr-center">
+      <a href="{{ routes.root_url }}" class="logo" aria-label="{{ shop.name }} homepage">
+        {%- if section.settings.logo != blank -%}
+          {{ section.settings.logo | img_url: '200x' | img_tag: shop.name, 'logo-img' }}
+        {%- else -%}
+          {{ shop.name | upcase }}<sup>™</sup>
+        {%- endif -%}
+      </a>
+    </div>
+
+    <!-- RIGHT: Wishlist + Cart -->
+    <div class="hdr-right">
+      <button class="ib" id="wishlistBtn" aria-label="View wishlist">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+        </svg>
+      </button>
+      <button class="cart-ib" id="cartOpenBtn" aria-label="Open cart" aria-controls="cartPanel">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/>
+        </svg>
+        <span class="cbadge" id="cartBadge" aria-live="polite">0</span>
+      </button>
+    </div>
+
+  </div><!-- /hdr-inner -->
+</header>
+
+<!-- ══ DRAWER NAV ══ -->
+<div class="drawer-overlay" id="drawerOverlay" aria-hidden="true"></div>
+<nav class="drawer-panel" id="drawerPanel" role="dialog" aria-label="Navigation menu" aria-modal="true">
+  <div class="drawer-hdr">
+    <span class="drawer-logo">{{ shop.name | upcase }}<sup>™</sup></span>
+    <button class="ib" id="drawerCloseBtn" aria-label="Close navigation">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+  <div class="drawer-nav">
+    <!-- Faces Dropdown -->
+    <div class="drawer-cat-wrap">
+      <button class="drawer-cat-btn" onclick="toggleDrawerCat('cat-face')" aria-expanded="false" aria-controls="cat-face">
+        <span>Face Care</span>
+        <svg class="drawer-cat-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div class="drawer-subcat" id="cat-face" hidden>
+        <a href="/collections/face" class="drawer-sub-lnk">All Face Products</a>
+        <a href="/collections/face-wash" class="drawer-sub-lnk" onclick="closeDrawer()">Face Wash</a>
+        <a href="/collections/moisturizer" class="drawer-sub-lnk" onclick="closeDrawer()">Moisturizers</a>
+        <a href="/collections/toner" class="drawer-sub-lnk" onclick="closeDrawer()">Toners</a>
+        <a href="/collections/lip-care" class="drawer-sub-lnk" onclick="closeDrawer()">Lip Care</a>
+      </div>
+    </div>
+    <!-- Sun Care Dropdown -->
+    <div class="drawer-cat-wrap">
+      <button class="drawer-cat-btn" onclick="toggleDrawerCat('cat-sun')" aria-expanded="false" aria-controls="cat-sun">
+        <span>Sun Care</span>
+        <svg class="drawer-cat-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div class="drawer-subcat" id="cat-sun" hidden>
+        <a href="/collections/sun-care" class="drawer-sub-lnk">All Sun Care</a>
+        <a href="/collections/sunscreen-stick" class="drawer-sub-lnk" onclick="closeDrawer()">Sunscreen Stick</a>
+        <a href="/collections/sunscreen-cream" class="drawer-sub-lnk" onclick="closeDrawer()">Sunscreen Cream</a>
+      </div>
+    </div>
+    <!-- Hair Dropdown -->
+    <div class="drawer-cat-wrap">
+      <button class="drawer-cat-btn" onclick="toggleDrawerCat('cat-hair')" aria-expanded="false" aria-controls="cat-hair">
+        <span>Hair Care</span>
+        <svg class="drawer-cat-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div class="drawer-subcat" id="cat-hair" hidden>
+        <a href="/collections/hair" class="drawer-sub-lnk">All Hair Care</a>
+        <a href="/collections/hair-oil" class="drawer-sub-lnk" onclick="closeDrawer()">Hair Oils</a>
+        <a href="/collections/shampoo" class="drawer-sub-lnk" onclick="closeDrawer()">Shampoos</a>
+      </div>
+    </div>
+
+    <!-- Bundles CTA -->
+    <div class="drawer-cat-wrap drawer-bundle-row">
+      <a href="/collections/bundles" class="drawer-cat-btn drawer-bundle-btn">
+        <span style="display:flex;align-items:center;gap:8px">
+          <span style="font-size:15px">🎁</span>
+          Bundle Offers
+          <span style="font-size:7px;font-weight:900;letter-spacing:1px;color:#fff;background:#c8a951;padding:2px 7px;border-radius:2px">SAVE MORE</span>
+        </span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+    </div>
+
+    <div class="drawer-divider"></div>
+    <a href="/pages/shipping" class="drawer-lnk">Shipping Policy <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg></a>
+    <a href="/pages/track-order" class="drawer-lnk">Track Order <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg></a>
+    <a href="/pages/contact" class="drawer-lnk">Contact Us <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg></a>
+  </div>
+  <div class="drawer-footer">
+    <p>© {{ 'now' | date: '%Y' }} {{ shop.name }}™ Pakistan</p>
+    <p style="margin-top:4px">{{ section.settings.support_email }}</p>
+  </div>
+</nav>
+
+{% schema %}
+{
+  "name": "Header",
+  "tag": "div",
+  "class": "site-header-wrapper",
+  "limit": 1,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Sale Strip"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_sale_strip",
+      "label": "Show sale countdown strip",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "sale_text",
+      "label": "Sale label",
+      "default": "FLASH SALE"
+    },
+    {
+      "type": "text",
+      "id": "sale_offer",
+      "label": "Offer prefix",
+      "default": "Up to"
+    },
+    {
+      "type": "text",
+      "id": "sale_discount",
+      "label": "Discount amount",
+      "default": "25% OFF"
+    },
+    {
+      "type": "text",
+      "id": "sale_btn_label",
+      "label": "Button label",
+      "default": "SHOP NOW"
+    },
+    {
+      "type": "url",
+      "id": "sale_btn_url",
+      "label": "Button URL"
+    },
+    {
+      "type": "header",
+      "content": "Ticker"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_ticker",
+      "label": "Show announcement ticker",
+      "default": true
+    },
+    {
+      "type": "textarea",
+      "id": "ticker_text",
+      "label": "Ticker items (separate with |)",
+      "default": "Free Shipping on Orders Over PKR 2000 | PCSIR Certified | Dermatologist Tested | Cruelty-Free & Halal | GMP Certified | DRAP Compliant | New Arrivals Every Month"
+    },
+    {
+      "type": "header",
+      "content": "Logo"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo image"
+    },
+    {
+      "type": "header",
+      "content": "Navigation Links"
+    },
+    {
+      "type": "text",
+      "id": "nav_link_1",
+      "label": "Link 1 label",
+      "default": "Shop All"
+    },
+    {
+      "type": "url",
+      "id": "nav_link_1_url",
+      "label": "Link 1 URL"
+    },
+    {
+      "type": "text",
+      "id": "nav_link_2",
+      "label": "Link 2 label",
+      "default": "Face"
+    },
+    {
+      "type": "url",
+      "id": "nav_link_2_url",
+      "label": "Link 2 URL"
+    },
+    {
+      "type": "text",
+      "id": "nav_link_3",
+      "label": "Link 3 label",
+      "default": "Sun Care"
+    },
+    {
+      "type": "url",
+      "id": "nav_link_3_url",
+      "label": "Link 3 URL"
+    },
+    {
+      "type": "text",
+      "id": "nav_link_4",
+      "label": "Link 4 label",
+      "default": "Hair"
+    },
+    {
+      "type": "url",
+      "id": "nav_link_4_url",
+      "label": "Link 4 URL"
+    },
+    {
+      "type": "text",
+      "id": "nav_link_5",
+      "label": "Link 5 label",
+      "default": "Our Story"
+    },
+    {
+      "type": "url",
+      "id": "nav_link_5_url",
+      "label": "Link 5 URL"
+    },
+    {
+      "type": "header",
+      "content": "Support"
+    },
+    {
+      "type": "text",
+      "id": "support_email",
+      "label": "Support email",
+      "default": "support@osiss.pk"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Header"
+    }
+  ]
+}
+{% endschema %}
+```
