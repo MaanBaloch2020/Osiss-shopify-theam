@@ -1,0 +1,155 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero",
+      "settings": {
+        "eyebrow_text": "OPTIMAL SKIN & SCALP SOLUTIONS",
+        "headline": "SCIENCE-|BACKED|SKINCARE",
+        "subheadline": "Where Dermatology Meets Daily Beauty Rituals.",
+        "trust_badges": "PCSIR, DRAP, GMP, 🌿 CRUELTY-FREE",
+        "origin_text": "🇵🇰 PROUDLY MADE IN PAKISTAN",
+        "primary_btn_label": "SHOP NOW →",
+        "secondary_btn_label": "OUR STORY",
+        "float_badge_title": "SPF 50+",
+        "float_badge_sub": "PA++++",
+        "float_badge_desc": "Broad Spectrum Shield",
+        "rating": "4.9/5",
+        "review_count": "2,500+",
+        "trust_icon_1": "shield",
+        "trust_text_1": "PCSIR Tested",
+        "trust_icon_2": "layers",
+        "trust_text_2": "DRAP Compliant",
+        "trust_icon_3": "award",
+        "trust_text_3": "GMP Certified",
+        "trust_icon_4": "leaf",
+        "trust_text_4": "Cruelty Free"
+      }
+    },
+    "featured_products": {
+      "type": "product-grid",
+      "settings": {
+        "section_id": "sec-featured",
+        "background_style": "grey",
+        "eyebrow": "HANDPICKED FOR YOU",
+        "title": "FEATURED PRODUCTS",
+        "products_to_show": 4,
+        "show_view_all": false,
+        "show_bottom_cta": true,
+        "bottom_cta_label": "VIEW ALL PRODUCTS"
+      },
+      "blocks": {}
+    },
+    "bestsellers": {
+      "type": "product-grid",
+      "settings": {
+        "section_id": "sec-bestseller",
+        "background_style": "white",
+        "eyebrow": "CUSTOMER FAVOURITES",
+        "title": "BEST SELLERS",
+        "products_to_show": 4,
+        "show_view_all": true,
+        "show_bottom_cta": false
+      },
+      "blocks": {}
+    },
+    "new_arrivals": {
+      "type": "product-grid",
+      "settings": {
+        "section_id": "sec-new",
+        "background_style": "grey",
+        "eyebrow": "JUST LANDED",
+        "title": "NEW ARRIVALS",
+        "products_to_show": 4,
+        "show_view_all": false,
+        "show_bottom_cta": true,
+        "bottom_cta_label": "SEE ALL NEW ARRIVALS"
+      },
+      "blocks": {}
+    },
+    "routine": {
+      "type": "routine-steps",
+      "settings": {
+        "eyebrow": "BUILD YOUR ROUTINE",
+        "title": "THE PERFECT 3-STEP ROUTINE"
+      },
+      "blocks": {
+        "step_1": {
+          "type": "step",
+          "settings": {
+            "icon": "droplet",
+            "step_title": "CLEANSE",
+            "step_desc": "Start with our Gentle Foaming Cleanser. pH-balanced to remove impurities without stripping your natural moisture barrier."
+          }
+        },
+        "step_2": {
+          "type": "step",
+          "settings": {
+            "icon": "sparkle",
+            "step_title": "TREAT",
+            "step_desc": "Apply our Revitalizing Face Serum to deeply hydrate, plump fine lines, and restore your skin's natural glow at a cellular level."
+          }
+        },
+        "step_3": {
+          "type": "step",
+          "settings": {
+            "icon": "sun",
+            "step_title": "PROTECT",
+            "step_desc": "Finish with Optimal Sunscreen Stick SPF 50+. Broad-spectrum, no white cast, featherweight formula for daily use."
+          }
+        }
+      },
+      "blocks_order": ["step_1", "step_2", "step_3"]
+    },
+    "reviews": {
+      "type": "reviews",
+      "settings": {
+        "eyebrow": "VERIFIED BUYERS",
+        "title": "WHAT OUR COMMUNITY SAYS",
+        "overall_rating": "4.9",
+        "review_count": "2,500+",
+        "recommend_pct": "98%"
+      },
+      "blocks": {
+        "review_1": {
+          "type": "review",
+          "settings": {
+            "stars": 5,
+            "verified": true,
+            "review_text": "I've been using the Sunscreen Stick for 3 months and my skin has never felt better. No white cast, no greasiness. Absolutely love it!",
+            "reviewer_name": "Ayesha K.",
+            "product_reviewed": "Optimal Sunscreen Stick SPF 50+"
+          }
+        },
+        "review_2": {
+          "type": "review",
+          "settings": {
+            "stars": 5,
+            "verified": true,
+            "review_text": "The Hyaluronic Serum plumped my skin overnight. My dark spots are visibly reduced after just 4 weeks of use.",
+            "reviewer_name": "Fatima R.",
+            "product_reviewed": "Revitalizing Face Serum"
+          }
+        },
+        "review_3": {
+          "type": "review",
+          "settings": {
+            "stars": 5,
+            "verified": true,
+            "review_text": "Finally a Pakistani brand that truly delivers. DRAP certified gives me confidence in the quality. Highly recommend!",
+            "reviewer_name": "Sara M.",
+            "product_reviewed": "Gentle Foaming Cleanser"
+          }
+        }
+      },
+      "blocks_order": ["review_1", "review_2", "review_3"]
+    }
+  },
+  "order": [
+    "hero",
+    "featured_products",
+    "bestsellers",
+    "new_arrivals",
+    "routine",
+    "reviews"
+  ]
+}
