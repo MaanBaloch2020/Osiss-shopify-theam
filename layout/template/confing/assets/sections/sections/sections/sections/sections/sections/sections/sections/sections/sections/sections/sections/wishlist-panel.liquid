@@ -1,0 +1,68 @@
+{% comment %}
+  Snippet: wishlist-panel.liquid
+  Renders the off-canvas wishlist panel.
+  State is managed by theme.js (wishlist array, renderWishlist).
+  Place once in theme.liquid.
+{% endcomment %}
+
+<div
+  class="wl-ov"
+  id="wlOverlay"
+  aria-hidden="true"
+  role="presentation"
+></div>
+
+<aside
+  class="wl-panel"
+  id="wlPanel"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Your wishlist"
+  aria-hidden="true"
+>
+
+  <div class="wl-hdr">
+    <div class="wl-ttl">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+      </svg>
+      WISHLIST
+    </div>
+    <button
+      class="ib"
+      id="wlClose"
+      aria-label="Close wishlist"
+      onclick="closeWishlist()"
+    >
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+        <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+      </svg>
+    </button>
+  </div>
+
+  <div class="wl-body" id="wlBody" aria-live="polite">
+    <div style="padding:48px 0;text-align:center">
+      <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#eee" stroke-width="1.5" style="margin-bottom:12px">
+        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+      </svg>
+      <p style="color:#888;font-size:14px">Your wishlist is empty</p>
+    </div>
+  </div>
+
+  <div class="wl-ftr">
+    <button class="btn p full" onclick="closeWishlist()">CONTINUE SHOPPING</button>
+  </div>
+
+</aside>
+
+{% schema %}
+{
+  "name": "Wishlist Panel",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Wishlist Panel"
+    }
+  ]
+}
+{% endschema %}
