@@ -1,0 +1,171 @@
+<section class="reviews-sec" aria-labelledby="reviews-title">
+  <div class="wrap">
+
+    [span_1](start_span)<p class="sec-eyebrow">{{ section.settings.eyebrow | default: 'VERIFIED BUYERS' }}</p>[span_1](end_span)
+    [span_2](start_span)<h2 class="sec-ttl" id="reviews-title">{{ section.settings.title | default: 'WHAT OUR COMMUNITY SAYS' }}</h2>[span_2](end_span)
+    <div class="sec-rule" aria-hidden="true"></div>
+
+    <div class="rv-summary">
+      <div class="rv-big-score" aria-label="Rating {{ section.settings.overall_rating }} out of 5">
+        [span_3](start_span){{ section.settings.overall_rating | default: '4.9' }}[span_3](end_span)
+      </div>
+      <div class="rv-summary-right">
+        <div class="rv-stars-row">
+          <span class="rv-stars-emoji" role="img" aria-hidden="true">⭐⭐⭐⭐⭐</span>
+          [span_4](start_span)<span class="rv-stars-label">{{ section.settings.overall_rating | default: '4.9' }} / 5 Rating</span>[span_4](end_span)
+        </div>
+        [span_5](start_span)<p class="rv-sub-label">Based on {{ section.settings.review_count | default: '2,500+' }} Verified Reviews</p>[span_5](end_span)
+        <p class="rv-sub-label" style="color:#2d6a4f;font-weight:700;margin-top:2px">
+          [span_6](start_span)✓ {{ section.settings.recommend_pct | default: '98%' }} Recommend This Brand[span_6](end_span)
+        </p>
+      </div>
+    </div>
+
+    <div class="sl-wrap" id="rvWrap" role="region" aria-label="Customer reviews">
+      <button class="sl-arrow prev" id="rvPrev" aria-label="Previous review">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <div class="sl-track" id="rvTrack" role="list">
+        [span_7](start_span){%- for block in section.blocks -%}[span_7](end_span)
+          {%- if block.type == 'review' -%}
+          <div class="rv-card" role="listitem" {{ block.shopify_attributes }}>
+            <div class="rv-card-stars" role="img" aria-label="{{ block.settings.stars }} star review">
+              {%- for i in (1..block.settings.stars) -%}
+                [span_8](start_span)<svg width="12" height="12" viewBox="0 0 24 24" fill="#f5a623" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>[span_8](end_span)
+              {%- endfor -%}
+            </div>
+            {%- if block.settings.verified -%}
+              <p class="rv-verified">✓ Verified Purchase</p>
+            {%- endif -%}
+            [span_9](start_span)<p class="rv-text">"{{ block.settings.review_text }}"</p>[span_9](end_span)
+            <div class="rv-author-row">
+              <span class="rv-name">{{ block.settings.reviewer_name }}</span>
+              <span class="rv-product">— {{ block.settings.product_reviewed }}</span>
+            </div>
+          </div>
+          {%- endif -%}
+        {%- endfor -%}
+      [span_10](start_span)</div>[span_10](end_span)
+      <button class="sl-arrow next" id="rvNext" aria-label="Next review">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+    </div>
+    <div class="sl-dots" id="rvDots" aria-label="Review navigation dots" role="tablist"></div>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Customer Reviews",
+  "tag": "div",
+  "class": "reviews-wrapper",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      [span_11](start_span)"label": "Eyebrow",[span_11](end_span)
+      "default": "VERIFIED BUYERS"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section title",
+      "default": "WHAT OUR COMMUNITY SAYS"
+    },
+    {
+      "type": "text",
+      "id": "overall_rating",
+      "label": "Overall rating",
+      "default": "4.9"
+    },
+    {
+      [span_12](start_span)"type": "text",[span_12](end_span)
+      "id": "review_count",
+      "label": "Total reviews",
+      "default": "2,500+"
+    },
+    {
+      "type": "text",
+      "id": "recommend_pct",
+      "label": "Recommend percentage",
+      "default": "98%"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Review",
+      "settings": [
+        [span_13](start_span){
+          "type": "range",
+          "id": "stars",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "label": "Star rating",
+          "default": 5
+        },
+        {[span_13](end_span)
+          "type": "checkbox",
+          "id": "verified",
+          "label": "Verified purchase",
+          "default": true
+        },
+        {
+          "type": "textarea",
+          "id": "review_text",
+          "label": "Review text"
+        },
+        [span_14](start_span){
+          "type": "text",
+          "id": "reviewer_name",
+          "label": "Reviewer name"
+        },
+        {
+          "type": "text",
+          "id": "product_reviewed",
+          "label": "Product name"
+        }
+      ][span_14](end_span)
+    }
+  ],
+  "presets": [
+    {
+      "name": "Customer Reviews",
+      "blocks": [
+        {
+          "type": "review",
+          "settings": {
+            "stars": 5,
+            "verified": true,
+            [span_15](start_span)"review_text": "I've been using the Sunscreen Stick for 3 months and my skin has never felt better.[span_15](end_span) No white cast, no greasiness. [span_16](start_span)Absolutely love it!",[span_16](end_span)
+            "reviewer_name": "Ayesha K.",
+            "product_reviewed": "Optimal Sunscreen Stick SPF 50+"
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "stars": 5,
+            [span_17](start_span)"verified": true,[span_17](end_span)
+            [span_18](start_span)"review_text": "The Hyaluronic Serum plumped my skin overnight.[span_18](end_span) My dark spots are visibly reduced after just 4 weeks of use.",
+            "reviewer_name": "Fatima R.",
+            "product_reviewed": "Revitalizing Face Serum"
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            [span_19](start_span)"stars": 5,[span_19](end_span)
+            "verified": true,
+            [span_20](start_span)"review_text": "Finally a Pakistani brand that truly delivers.[span_20](end_span) DRAP certified gives me confidence in the quality. Highly recommend to everyone.",
+            "reviewer_name": "Sara M.",
+            "product_reviewed": "Gentle Foaming Cleanser"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
