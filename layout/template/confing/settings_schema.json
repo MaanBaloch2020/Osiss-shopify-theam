@@ -1,0 +1,244 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "OSISS™️ Theme",
+    "theme_version": "1.0.0",
+    "theme_author": "Osiss Enterprises",
+    "theme_documentation_url": "https://osiss.pk",
+    "theme_support_url": "https://osiss.pk/pages/contact"
+  },
+  {
+    "name": "Brand Settings",
+    "settings": [
+      {
+        "type": "text",
+        "id": "brand_name",
+        "label": "Brand name",
+        "default": "OSISS™️"
+      },
+      {
+        "type": "image_picker",
+        "id": "favicon",
+        "label": "Favicon"
+      },
+      {
+        "type": "text",
+        "id": "whatsapp_number",
+        "label": "WhatsApp number (country code + number, no + or spaces)",
+        "default": "923021345111",
+        "info": "Example: 923021345111 for +92 302 1345111"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_whatsapp_float",
+        "label": "Show WhatsApp floating button",
+        "default": true
+      }
+    ]
+  },
+  {
+    "name": "Colors",
+    "settings": [
+      {
+        "type": "color",
+        "id": "color_primary",
+        "label": "Primary accent (gold)",
+        "default": "#c8a951"
+      },
+      {
+        "type": "color",
+        "id": "color_bg",
+        "label": "Page background",
+        "default": "#FAFAFA"
+      },
+      {
+        "type": "color",
+        "id": "color_text",
+        "label": "Body text color",
+        "default": "#000000"
+      },
+      {
+        "type": "color",
+        "id": "color_btn_primary_bg",
+        "label": "Primary button background",
+        "default": "#000000"
+      },
+      {
+        "type": "color",
+        "id": "color_btn_primary_text",
+        "label": "Primary button text",
+        "default": "#ffffff"
+      }
+    ]
+  },
+  {
+    "name": "Typography",
+    "settings": [
+      {
+        "type": "font_picker",
+        "id": "font_heading",
+        "label": "Heading font",
+        "default": "montserrat_n9"
+      },
+      {
+        "type": "font_picker",
+        "id": "font_body",
+        "label": "Body font",
+        "default": "montserrat_n4"
+      },
+      {
+        "type": "range",
+        "id": "font_size_base",
+        "min": 12,
+        "max": 18,
+        "step": 1,
+        "unit": "px",
+        "label": "Base font size",
+        "default": 14
+      }
+    ]
+  },
+  {
+    "name": "Shipping & Commerce",
+    "settings": [
+      {
+        "type": "text",
+        "id": "free_shipping_threshold",
+        "label": "Free shipping threshold (PKR)",
+        "default": "2000",
+        "info": "Orders above this amount get free shipping"
+      },
+      {
+        "type": "text",
+        "id": "standard_shipping_rate",
+        "label": "Standard shipping rate (PKR)",
+        "default": "250"
+      },
+      {
+        "type": "text",
+        "id": "currency_code",
+        "label": "Currency code",
+        "default": "PKR"
+      }
+    ]
+  },
+  {
+    "name": "Social Media",
+    "settings": [
+      {
+        "type": "url",
+        "id": "social_instagram",
+        "label": "Instagram URL"
+      },
+      {
+        "type": "url",
+        "id": "social_facebook",
+        "label": "Facebook URL"
+      },
+      {
+        "type": "url",
+        "id": "social_tiktok",
+        "label": "TikTok URL"
+      },
+      {
+        "type": "url",
+        "id": "social_youtube",
+        "label": "YouTube URL"
+      }
+    ]
+  },
+  {
+    "name": "SEO",
+    "settings": [
+      {
+        "type": "text",
+        "id": "meta_title_suffix",
+        "label": "Meta title suffix",
+        "default": "OSISS™️ — Dermatology-Driven Skincare"
+      },
+      {
+        "type": "textarea",
+        "id": "meta_description_default",
+        "label": "Default meta description",
+        "default": "OSISS™️ — Science-backed skincare powered by dermatology. PCSIR Tested, DRAP Compliant, GMP Certified. Proudly made in Pakistan."
+      },
+      {
+        "type": "image_picker",
+        "id": "og_image_default",
+        "label": "Default Open Graph image",
+        "info": "Recommended: 1200x630px"
+      }
+    ]
+  },
+  {
+    "name": "Announcement Bar",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "enable_announcement",
+        "label": "Enable announcement ticker",
+        "default": true
+      },
+      {
+        "type": "textarea",
+        "id": "announcement_text",
+        "label": "Ticker items (separate each item with |)",
+        "default": "Free Shipping on Orders Over PKR 2000 | PCSIR Certified | Dermatologist Tested | Cruelty-Free & Halal | GMP Certified | DRAP Compliant | New Arrivals Every Month"
+      }
+    ]
+  },
+  {
+    "name": "Cart",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "enable_ajax_cart",
+        "label": "Enable slide-in AJAX cart",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "show_shipping_progress",
+        "label": "Show free shipping progress bar",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_promo_codes",
+        "label": "Enable promo code field in cart",
+        "default": false,
+        "info": "Use Shopify Discounts for production — this is a display-only toggle"
+      }
+    ]
+  },
+  {
+    "name": "Product Cards",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "show_product_badges",
+        "label": "Show product badges (Best Seller, New, etc.)",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "show_star_ratings",
+        "label": "Show star ratings on product cards",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "show_savings_percent",
+        "label": "Show savings percentage on product cards",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_quick_view",
+        "label": "Enable quick view on product cards",
+        "default": true
+      }
+    ]
+  }
+]
+```
