@@ -1,0 +1,41 @@
+{
+  "general": {
+    "password_page": {
+      "login_form_heading": "Enter store password",
+      "login_form_password_label": "Password",
+      "login_form_password_placeholder": "Your password",
+      "login_form_submit": "Enter",
+      "admin_link_html": "Are you the store owner? <a href=\"/admin\">Log in here</a>"
+    },
+    "404": {
+      "title": "Page not found",
+      "subtext": "We can't find the page you're looking for.",
+      "link": "Continue shopping"
+    },
+    "pagination": {
+      "previous": "Previous",
+      "next": "Next"
+    }
+  },
+  "products": {
+    "product": {
+      "add_to_cart": "Add to cart",
+      "sold_out": "Sold out",
+      "unavailable": "Unavailable"
+    }
+  },
+  "cart": {
+    "general": {
+      "title": "Your cart",
+      "empty": "Your cart is empty",
+      "checkout": "Checkout",
+      "subtotal": "Subtotal",
+      "remove": "Remove"
+    }
+  },
+  "sections": {
+    "header": {
+      "cart": "Cart"
+    }
+  }
+}
