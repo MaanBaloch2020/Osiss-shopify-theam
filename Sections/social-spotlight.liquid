@@ -1,0 +1,198 @@
+<!-- ══ SOCIAL SPOTLIGHT SECTION ══ -->
+<section class="social-sec" aria-labelledby="social-title">
+
+  <div class="wrap" style="padding-bottom:0">
+    <p class="sec-eyebrow">{{ section.settings.handle_text | default: '@OSISS.PK' }}</p>
+    <h2 class="sec-ttl" id="social-title">{{ section.settings.title | default: 'SOCIAL SPOTLIGHT' }}</h2>
+  </div>
+
+  <!-- Reels / Post cards row -->
+  <div class="reels-row" id="reelsRow" role="list" aria-label="Social media posts">
+
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'reel_card' -%}
+      <div class="reel-card" role="listitem" {{ block.shopify_attributes }}>
+
+        {%- if block.settings.post_link != blank -%}
+          <a href="{{ block.settings.post_link }}" target="_blank" rel="noopener noreferrer" class="reel-inner" aria-label="{{ block.settings.label | default: 'View on Instagram' }}">
+        {%- else -%}
+          <div class="reel-inner">
+        {%- endif -%}
+
+          <!-- Background image or gradient -->
+          {%- if block.settings.post_image != blank -%}
+            <img
+              src="{{ block.settings.post_image | img_url: '320x568', crop: 'center' }}"
+              alt="{{ block.settings.label | default: 'OSISS social post' }}"
+              loading="lazy"
+              style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"
+            >
+          {%- else -%}
+            <!-- Placeholder gradient when no image uploaded -->
+            <div class="reel-pattern" aria-hidden="true"></div>
+            <div style="position:absolute;inset:0;background:linear-gradient(160deg,{{ block.settings.gradient_from | default: '#1a1a1a' }} 0%,{{ block.settings.gradient_to | default: '#2a2a2a' }} 100%)" aria-hidden="true"></div>
+            <!-- Decorative product doodle -->
+            <svg width="48" height="56" viewBox="0 0 48 56" fill="none" style="position:relative;z-index:1;opacity:.5" aria-hidden="true">
+              <rect x="16" y="2" width="16" height="48" rx="5" fill="none" stroke="rgba(255,255,255,.4)" stroke-width="1.5"/>
+              <text x="24" y="24" text-anchor="middle" font-family="Montserrat,sans-serif" font-size="6" font-weight="900" fill="rgba(255,255,255,.5)" letter-spacing="1">OSISS</text>
+            </svg>
+          {%- endif -%}
+
+          <div class="reel-grad" aria-hidden="true"></div>
+
+          <!-- Play icon -->
+          {%- if block.settings.show_play_icon -%}
+            <div class="reel-play" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="rgba(255,255,255,.9)">
+                <polygon points="5 3 19 12 5 21 5 3"/>
+              </svg>
+            </div>
+          {%- endif -%}
+
+          <!-- Label -->
+          {%- if block.settings.label != blank -%}
+            <p class="reel-lbl" style="position:relative;z-index:1">{{ block.settings.label }}</p>
+          {%- endif -%}
+
+          <!-- Product tag chip -->
+          {%- if block.settings.product_tag != blank -%}
+            <div class="reel-tag">
+              <span>{{ block.settings.product_tag }}</span>
+            </div>
+          {%- endif -%}
+
+        {%- if block.settings.post_link != blank -%}
+          </a>
+        {%- else -%}
+          </div>
+        {%- endif -%}
+
+      </div><!-- /reel-card -->
+      {%- endif -%}
+    {%- endfor -%}
+
+  </div><!-- /reels-row -->
+
+  <!-- Follow CTA -->
+  {%- if section.settings.show_follow_btn -%}
+  <div class="wrap" style="padding-top:20px;text-align:center">
+    <a
+      href="{{ section.settings.follow_url | default: 'https://instagram.com/osiss.pk' }}"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="social-follow-btn"
+      aria-label="Follow OSISS on social media"
+    >
+      {{ section.settings.follow_label | default: 'FOLLOW US FOR UPDATES' }}
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+        <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+      </svg>
+    </a>
+  </div>
+  {%- endif -%}
+
+</section>
+
+{% schema %}
+{
+  "name": "Social Spotlight",
+  "tag": "div",
+  "class": "social-wrapper",
+  "settings": [
+    {
+      "type": "text",
+      "id": "handle_text",
+      "label": "Social handle / eyebrow",
+      "default": "@OSISS.PK"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section title",
+      "default": "SOCIAL SPOTLIGHT"
+    },
+    {
+      "type": "header",
+      "content": "Follow Button"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_follow_btn",
+      "label": "Show follow button",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "follow_label",
+      "label": "Follow button label",
+      "default": "FOLLOW US FOR UPDATES"
+    },
+    {
+      "type": "url",
+      "id": "follow_url",
+      "label": "Follow URL (Instagram, TikTok, etc.)"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "reel_card",
+      "name": "Post / Reel Card",
+      "limit": 8,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "post_image",
+          "label": "Post image / Reel thumbnail"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Caption / label",
+          "default": "Skincare Routine ✨"
+        },
+        {
+          "type": "text",
+          "id": "product_tag",
+          "label": "Product tag (shown at bottom)",
+          "default": "SUN STICK SPF 50+"
+        },
+        {
+          "type": "url",
+          "id": "post_link",
+          "label": "Link to post (Instagram, TikTok, etc.)"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_play_icon",
+          "label": "Show play icon (for Reels/Videos)",
+          "default": true
+        },
+        {
+          "type": "color",
+          "id": "gradient_from",
+          "label": "Gradient start (placeholder only)",
+          "default": "#1a1a1a"
+        },
+        {
+          "type": "color",
+          "id": "gradient_to",
+          "label": "Gradient end (placeholder only)",
+          "default": "#2a2a2a"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Social Spotlight",
+      "blocks": [
+        { "type": "reel_card", "settings": { "label": "Morning Skincare Routine ✨", "product_tag": "FOAMING CLEANSER", "show_play_icon": true } },
+        { "type": "reel_card", "settings": { "label": "SPF — Your Daily Must ☀️", "product_tag": "SUN STICK SPF 50+", "show_play_icon": true } },
+        { "type": "reel_card", "settings": { "label": "Glow Up with Hyaluronic 💧", "product_tag": "FACE SERUM", "show_play_icon": false } },
+        { "type": "reel_card", "settings": { "label": "Scalp Care Essentials 🌿", "product_tag": "SCALP OIL", "show_play_icon": true } },
+        { "type": "reel_card", "settings": { "label": "Customer Review Highlight ⭐", "product_tag": "BESTSELLER", "show_play_icon": false } }
+      ]
+    }
+  ]
+}
+{% endschema %}

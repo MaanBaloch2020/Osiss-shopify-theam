@@ -1,0 +1,130 @@
+<!-- ══ ROUTINE SECTION ══ -->
+<section class="routine-sec" aria-labelledby="routine-title">
+  <div class="wrap">
+    <p class="sec-eyebrow">{{ section.settings.eyebrow | default: 'BUILD YOUR ROUTINE' }}</p>
+    <h2 class="sec-ttl" id="routine-title">{{ section.settings.title | default: 'THE PERFECT 3-STEP ROUTINE' }}</h2>
+
+    <div class="grid3" role="list">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'step' -%}
+        <div class="step-card" role="listitem" {{ block.shopify_attributes }}>
+          <div class="step-icon" aria-hidden="true">
+            {%- case block.settings.icon -%}
+              {%- when 'droplet' -%}
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+              {%- when 'sparkle' -%}
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"/></svg>
+              {%- when 'sun' -%}
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+              {%- when 'leaf' -%}
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M17 8C8 10 5.9 16.17 3.82 19.5c-.2.34.04.72.44.64 2.5-.52 6.18-1.8 9.76-5.26C14.35 13.7 15 12 15 12"/></svg>
+              {%- else -%}
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            {%- endcase -%}
+          </div>
+          <p class="s-num">STEP {{ forloop.index }}</p>
+          <p class="s-ttl">{{ block.settings.step_title | upcase }}</p>
+          <p class="s-desc">{{ block.settings.step_desc }}</p>
+          {%- if block.settings.btn_url != blank -%}
+            <a href="{{ block.settings.btn_url }}" class="s-btn">SHOP NOW</a>
+          {%- else -%}
+            <a href="/collections/all" class="s-btn">SHOP NOW</a>
+          {%- endif -%}
+        </div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Routine Steps",
+  "tag": "div",
+  "class": "routine-wrapper",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow text",
+      "default": "BUILD YOUR ROUTINE"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section title",
+      "default": "THE PERFECT 3-STEP ROUTINE"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Routine Step",
+      "limit": 4,
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            { "value": "droplet", "label": "Droplet (Cleanse)" },
+            { "value": "sparkle", "label": "Sparkle (Treat)" },
+            { "value": "sun", "label": "Sun (Protect)" },
+            { "value": "leaf", "label": "Leaf" }
+          ],
+          "default": "droplet"
+        },
+        {
+          "type": "text",
+          "id": "step_title",
+          "label": "Step title",
+          "default": "CLEANSE"
+        },
+        {
+          "type": "textarea",
+          "id": "step_desc",
+          "label": "Step description",
+          "default": "Start with our Gentle Foaming Cleanser. pH-balanced to remove impurities without stripping your natural moisture barrier."
+        },
+        {
+          "type": "url",
+          "id": "btn_url",
+          "label": "Shop Now URL"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Routine Steps",
+      "blocks": [
+        {
+          "type": "step",
+          "settings": {
+            "icon": "droplet",
+            "step_title": "CLEANSE",
+            "step_desc": "Start with our Gentle Foaming Cleanser. pH-balanced to remove impurities without stripping your natural moisture barrier."
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "icon": "sparkle",
+            "step_title": "TREAT",
+            "step_desc": "Apply our Revitalizing Face Serum to deeply hydrate, plump fine lines, and restore your skin's natural glow at a cellular level."
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "icon": "sun",
+            "step_title": "PROTECT",
+            "step_desc": "Finish with Optimal Sunscreen Stick SPF 50+. Broad-spectrum, no white cast, featherweight formula for daily use."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

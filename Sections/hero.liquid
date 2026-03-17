@@ -1,0 +1,384 @@
+<!-- ══ HERO POSTER ══ -->
+<section class="hero-poster" id="heroSection" aria-label="Hero banner">
+  <div class="hp-wrap">
+
+    <!-- LEFT — Copy -->
+    <div class="hp-left">
+      <div class="hp-eyebrow">
+        <span class="hp-eyeline" aria-hidden="true"></span>
+        <span class="hp-eye-text">{{ section.settings.eyebrow_text }}</span>
+      </div>
+
+      <h1 class="hp-h1 a1">
+        {%- assign headline_parts = section.settings.headline | split: '|' -%}
+        {%- for part in headline_parts -%}
+          {%- if forloop.last -%}
+            <span class="hp-h1-gold">{{ part | strip }}<sup>™</sup></span>
+          {%- else -%}
+            <span class="hp-h1-white">{{ part | strip }}</span><br>
+          {%- endif -%}
+        {%- endfor -%}
+      </h1>
+
+      <p class="hp-sub a2">{{ section.settings.subheadline }}</p>
+
+      <div class="hp-badges a2">
+        {%- assign badges = section.settings.trust_badges | split: ',' -%}
+        {%- for badge in badges -%}
+          <span class="hp-badge">{{ badge | strip }}</span>
+        {%- endfor -%}
+      </div>
+
+      <div class="hp-btns a3">
+        <a href="{{ section.settings.primary_btn_url | default: '#sec-bestseller' }}" class="hp-btn-gold">
+          {{ section.settings.primary_btn_label | default: 'SHOP NOW →' }}
+        </a>
+        <a href="{{ section.settings.secondary_btn_url | default: '/pages/about' }}" class="hp-btn-outline">
+          {{ section.settings.secondary_btn_label | default: 'OUR STORY' }}
+        </a>
+      </div>
+
+      <p class="hp-pakistan">{{ section.settings.origin_text }}</p>
+    </div>
+
+    <!-- RIGHT — Product Showcase -->
+    <div class="hp-right">
+
+      <!-- Floating badge top -->
+      <div class="hp-float-badge hp-float-top">
+        <span class="hp-fb-icon" aria-hidden="true">☀️</span>
+        <span class="hp-fb-text">
+          <strong>{{ section.settings.float_badge_title }}</strong> {{ section.settings.float_badge_sub }}
+          <small>{{ section.settings.float_badge_desc }}</small>
+        </span>
+      </div>
+
+      <!-- Products row — inline SVG product illustrations -->
+      <div class="hp-products" role="img" aria-label="Osiss product range">
+
+        <!-- Serum (back-left) -->
+        <div class="hp-prod hp-prod--back hp-prod--left">
+          <svg viewBox="0 0 70 280" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="sb1" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#b0bcc0"/><stop offset="35%" stop-color="#d8e8ee"/><stop offset="60%" stop-color="#eef6fa"/><stop offset="100%" stop-color="#a8b8bc"/></linearGradient>
+              <linearGradient id="ss1" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#fff" stop-opacity=".4"/><stop offset="100%" stop-color="#fff" stop-opacity="0"/></linearGradient>
+              <linearGradient id="sg1" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#9a7a2a"/><stop offset="50%" stop-color="#e8d080"/><stop offset="100%" stop-color="#9a7a2a"/></linearGradient>
+            </defs>
+            <rect x="26" y="0" width="8" height="5" rx="1.5" fill="#999"/>
+            <ellipse cx="30" cy="10" rx="9" ry="8" fill="#c8c8c8" stroke="#bbb" stroke-width=".5"/>
+            <rect x="22" y="16" width="16" height="14" rx="2" fill="#c0c0c0"/>
+            <path d="M8 30 Q2 38 2 48 L68 48 Q68 38 62 30Z" fill="#bcc8cc"/>
+            <rect x="0" y="46" width="70" height="220" rx="12" fill="url(#sb1)" stroke="#b0bcc0" stroke-width=".7"/>
+            <rect x="5" y="80" width="60" height="150" rx="3" fill="#fff" opacity=".92"/>
+            <text x="35" y="104" text-anchor="middle" font-family="Montserrat,sans-serif" font-size="11" font-weight="900" fill="#111" letter-spacing="2">OSISS</text>
+            <line x1="10" y1="109" x2="60" y2="109" stroke="#e8e8e8" stroke-width=".7"/>
+            <text x="35" y="124" text-anchor="middle" font-family="Montserrat,sans-serif" font-size="7.5" font-weight="900" fill="#222" letter-spacing="1">HYALURONIC</text>
+            <text x="35" y="135" text-anchor="middle" font-family="Montserrat,sans-serif" font-size="7.5" font-weight="900" fill="#222" letter-spacing="1">SERUM</text>
+            <rect x="5" y="140" width="60" height="2" fill="url(#sg1)" opacity=".55"/>
+            <text x="35" y="154" text-anchor="middle" font-family="Montserrat,sans-serif" font-size="6" font-weight="600" fill="#777">Advanced Formula</text>
+            <text x="35" y="165" text-anchor="middle" font-family="Montserrat,sans-serif" font-size="5.5" font-weight="500" fill="#aaa">30ml</text>
+            <rect x="0" y="46" width="16" height="220" rx="11" fill="url(#ss1)"/>
+          </svg>
+          <span class="hp-prod-name">Hyaluronic Serum</span>
+        </div>
+
+        <!-- Main Hero Bottle (Foaming Cleanser) -->
+        <div class="hp-prod hp-prod--main">
+          {%- if section.settings.hero_product_image != blank -%}
+            {{ section.settings.hero_product_image | img_url: '400x' | img_tag: 'Osiss Gentle Foaming Cleanser', 'hero-product-img' }}
+          {%- else -%}
+          <svg viewBox="0 0 100 340" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="mb1" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#b8c8cc"/><stop offset="25%" stop-color="#d8eaf0"/><stop offset="50%" stop-color="#f0f8fc"/><stop offset="75%" stop-color="#d8eaf0"/><stop offset="100%" stop-color="#b0c0c4"/></linearGradient>
+              <linearGradient id="mp1" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#888"/><stop offset="50%" stop-color="#ccc"/><stop offset="100%" stop-color="#888"/></linearGradient>
+              <linearGradient id="ms1" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#fff" stop-opacity=".42"/><stop offset="100%" stop-color="#fff" stop-opacity="0"/></linearGradient>
+              <linearGradient id="mg1" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#9a7a2a"/><stop offset="50%" stop-color="#e8d080"/><stop offset="100%" stop-color="#9a7a2a"/></linearGradient>
+              <filter id="mshadow"><feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#000" flood-opacity=".55"/></filter>
+            </defs>
+            <g filter="url(#mshadow)">
+              <rect x="44" y="0" width="12" height="7" rx="2" fill="#bbb"/>
+              <rect x="48" y="7" width="4" height="56" rx="2" fill="#aaa"/>
+              <rect x="30" y="18" width="26" height="7" rx="3.5" fill="#999"/>
+              <ellipse cx="50" cy="64" rx="18" ry="10" fill="#c0c0c0"/>
+              <path d="M14 74 Q4 84 2 98 L98 98 Q96 84 86 74Z" fill="#c4d0d4"/>
+              <rect x="0" y="96" width="100" height="230" rx="14" fill="url(#mb1)" stroke="#b8c4c8" stroke-width=".8"/>
+              <rect x="6" y="140" width="88" height="160" rx="4" fill="#fff" opacity=".93"/>
+              <text x="50" y="168" text-anchor="middle" font-family="Montserrat,sans-serif" font-size="15" font-weight="900" fill="#0a0a0a" letter-spacing="2.5">OSISS</text>
+              <line x1="12" y1="174" x2="88" y2="174" stroke="#e8e8e8" stroke-width=".8"/>
+              <text x="50" y="191" text-anchor="middle" font-family="Montserrat,sans-serif" font-size="8" font-weight="900" fill="#111" letter-spacing="1">GENTLE FOAMING</text>
+              <text x="50" y="203" text-anchor="middle" font-family="Montserrat,sans-serif" font-size="8" font-weight="900" fill="#111" letter-spacing="1">CLEANSER</text>
+              <rect x="6" y="210" width="88" height="2.5" fill="url(#mg1)" opacity=".65"/>
+              <text x="50" y="225" text-anchor="middle" font-family="Montserrat,sans-serif" font-size="6.5" font-weight="700" fill="#666">pH-Balanced Formula</text>
+              <text x="50" y="237" text-anchor="middle" font-family="Montserrat,sans-serif" font-size="6" font-weight="500" fill="#999">150ml · 5 fl oz</text>
+              <rect x="22" y="250" width="56" height="16" rx="2" fill="none" stroke="#eee" stroke-width=".7"/>
+              <text x="50" y="261" text-anchor="middle" font-family="Montserrat,sans-serif" font-size="6" font-weight="700" fill="#c8a951" letter-spacing=".8">PCSIR · DRAP · GMP</text>
+              <text x="50" y="277" text-anchor="middle" font-family="Montserrat,sans-serif" font-size="6" font-weight="600" fill="#888">ALL SKIN TYPES</text>
+              <text x="50" y="289" text-anchor="middle" font-family="Montserrat,sans-serif" font-size="6" font-weight="600" fill="#888">DERMATOLOGIST TESTED</text>
+              <rect x="0" y="96" width="24" height="230" rx="12" fill="url(#ms1)"/>
+              <rect x="0" y="320" width="100" height="8" rx="4" fill="#a8b8bc"/>
+            </g>
+          </svg>
+          {%- endif -%}
+          <span class="hp-prod-name hp-prod-name--main">Gentle Foaming Cleanser</span>
+          <span class="hp-prod-price">PKR {{ section.settings.hero_product_price | default: '1,500' }}</span>
+        </div>
+
+        <!-- Sun Stick (back-right) -->
+        <div class="hp-prod hp-prod--back hp-prod--right">
+          <svg viewBox="0 0 70 260" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="sk1" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#b0bcc0"/><stop offset="25%" stop-color="#d0dce2"/><stop offset="50%" stop-color="#e8f2f8"/><stop offset="75%" stop-color="#d0dce2"/><stop offset="100%" stop-color="#a8b4b8"/></linearGradient>
+              <linearGradient id="sksh" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#fff" stop-opacity=".38"/><stop offset="100%" stop-color="#fff" stop-opacity="0"/></linearGradient>
+              <linearGradient id="skg" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#9a7a2a"/><stop offset="50%" stop-color="#e8d080"/><stop offset="100%" stop-color="#9a7a2a"/></linearGradient>
+            </defs>
+            <rect x="2" y="2" width="66" height="256" rx="12" fill="url(#sk1)" stroke="#b0bcbc" stroke-width=".7"/>
+            <rect x="2" y="2" width="66" height="34" rx="12" fill="#c8d4d8"/>
+            <rect x="2" y="28" width="66" height="8" fill="#bcc8cc"/>
+            <rect x="8" y="46" width="54" height="150" rx="3" fill="#fff" opacity=".93"/>
+            <text x="35" y="70" text-anchor="middle" font-family="Montserrat,sans-serif" font-size="10" font-weight="900" fill="#111" letter-spacing="2">OSISS</text>
+            <line x1="12" y1="75" x2="58" y2="75" stroke="#eee" stroke-width=".6"/>
+            <text x="35" y="91" text-anchor="middle" font-family="Montserrat,sans-serif" font-size="10" font-weight="900" fill="#111">SUN</text>
+            <text x="35" y="104" text-anchor="middle" font-family="Montserrat,sans-serif" font-size="10" font-weight="900" fill="#111">STICK</text>
+            <rect x="8" y="110" width="54" height="2" fill="url(#skg)" opacity=".55"/>
+            <text x="35" y="124" text-anchor="middle" font-family="Montserrat,sans-serif" font-size="8.5" font-weight="900" fill="#c8a951">SPF 50+</text>
+            <text x="35" y="137" text-anchor="middle" font-family="Montserrat,sans-serif" font-size="7" font-weight="700" fill="#888">PA++++</text>
+            <text x="35" y="150" text-anchor="middle" font-family="Montserrat,sans-serif" font-size="6" font-weight="600" fill="#999">Broad Spectrum</text>
+            <text x="35" y="162" text-anchor="middle" font-family="Montserrat,sans-serif" font-size="6" font-weight="500" fill="#bbb">40g</text>
+            <rect x="2" y="2" width="16" height="256" rx="10" fill="url(#sksh)"/>
+            <rect x="2" y="244" width="66" height="12" rx="6" fill="#a8b4b8"/>
+          </svg>
+          <span class="hp-prod-name">Sun Stick SPF 50+</span>
+        </div>
+
+      </div><!-- /hp-products -->
+
+      <!-- Floating review badge bottom -->
+      <div class="hp-float-badge hp-float-bottom">
+        <span class="hp-fb-stars" aria-label="5 star rating" role="img">⭐⭐⭐⭐⭐</span>
+        <span class="hp-fb-text">
+          <strong>{{ section.settings.rating }}</strong> · {{ section.settings.review_count }} Reviews
+        </span>
+      </div>
+
+    </div><!-- /hp-right -->
+  </div>
+</section>
+
+<!-- ══ TRUST BAR ══ -->
+<div class="trust-bar" role="region" aria-label="Trust badges">
+  <div class="trust-grid">
+    {%- for i in (1..4) -%}
+      {%- assign icon_key = 'trust_icon_' | append: i -%}
+      {%- assign text_key = 'trust_text_' | append: i -%}
+      <div class="ti">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          {%- case section.settings[icon_key] -%}
+            {%- when 'shield' -%}<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            {%- when 'award' -%}<circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/>
+            {%- when 'leaf' -%}<path d="M17 8C8 10 5.9 16.17 3.82 19.5c-.2.34.04.72.44.64 2.5-.52 6.18-1.8 9.76-5.26C14.35 13.7 15 12 15 12"/><path d="M3 3h.01"/>
+            {%- when 'layers' -%}<polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/>
+            {%- else -%}<polyline points="20 6 9 17 4 12"/>
+          {%- endcase -%}
+        </svg>
+        <span>{{ section.settings[text_key] }}</span>
+      </div>
+    {%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Hero",
+  "tag": "div",
+  "class": "hero-wrapper",
+  "limit": 1,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Headline"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow_text",
+      "label": "Eyebrow text",
+      "default": "OPTIMAL SKIN & SCALP SOLUTIONS"
+    },
+    {
+      "type": "textarea",
+      "id": "headline",
+      "label": "Headline (separate lines with |, last line will be gold)",
+      "default": "SCIENCE-|BACKED|SKINCARE"
+    },
+    {
+      "type": "text",
+      "id": "subheadline",
+      "label": "Sub-headline",
+      "default": "Where Dermatology Meets Daily Beauty Rituals."
+    },
+    {
+      "type": "text",
+      "id": "trust_badges",
+      "label": "Trust badges (comma-separated)",
+      "default": "PCSIR, DRAP, GMP, 🌿 CRUELTY-FREE"
+    },
+    {
+      "type": "text",
+      "id": "origin_text",
+      "label": "Origin tagline",
+      "default": "🇵🇰 PROUDLY MADE IN PAKISTAN"
+    },
+    {
+      "type": "header",
+      "content": "Buttons"
+    },
+    {
+      "type": "text",
+      "id": "primary_btn_label",
+      "label": "Primary button label",
+      "default": "SHOP NOW →"
+    },
+    {
+      "type": "url",
+      "id": "primary_btn_url",
+      "label": "Primary button URL"
+    },
+    {
+      "type": "text",
+      "id": "secondary_btn_label",
+      "label": "Secondary button label",
+      "default": "OUR STORY"
+    },
+    {
+      "type": "url",
+      "id": "secondary_btn_url",
+      "label": "Secondary button URL"
+    },
+    {
+      "type": "header",
+      "content": "Product Showcase"
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_product_image",
+      "label": "Hero product image (replaces SVG)"
+    },
+    {
+      "type": "text",
+      "id": "hero_product_price",
+      "label": "Hero product price (PKR)",
+      "default": "1,500"
+    },
+    {
+      "type": "text",
+      "id": "float_badge_title",
+      "label": "Float badge title",
+      "default": "SPF 50+"
+    },
+    {
+      "type": "text",
+      "id": "float_badge_sub",
+      "label": "Float badge subtitle",
+      "default": "PA++++"
+    },
+    {
+      "type": "text",
+      "id": "float_badge_desc",
+      "label": "Float badge description",
+      "default": "Broad Spectrum Shield"
+    },
+    {
+      "type": "text",
+      "id": "rating",
+      "label": "Rating display",
+      "default": "4.9/5"
+    },
+    {
+      "type": "text",
+      "id": "review_count",
+      "label": "Review count",
+      "default": "2,500+"
+    },
+    {
+      "type": "header",
+      "content": "Trust Bar"
+    },
+    {
+      "type": "select",
+      "id": "trust_icon_1",
+      "label": "Trust item 1 icon",
+      "options": [
+        { "value": "shield", "label": "Shield" },
+        { "value": "award", "label": "Award" },
+        { "value": "leaf", "label": "Leaf" },
+        { "value": "layers", "label": "Layers" }
+      ],
+      "default": "shield"
+    },
+    {
+      "type": "text",
+      "id": "trust_text_1",
+      "label": "Trust item 1 text",
+      "default": "PCSIR Tested"
+    },
+    {
+      "type": "select",
+      "id": "trust_icon_2",
+      "label": "Trust item 2 icon",
+      "options": [
+        { "value": "shield", "label": "Shield" },
+        { "value": "award", "label": "Award" },
+        { "value": "leaf", "label": "Leaf" },
+        { "value": "layers", "label": "Layers" }
+      ],
+      "default": "layers"
+    },
+    {
+      "type": "text",
+      "id": "trust_text_2",
+      "label": "Trust item 2 text",
+      "default": "DRAP Compliant"
+    },
+    {
+      "type": "select",
+      "id": "trust_icon_3",
+      "label": "Trust item 3 icon",
+      "options": [
+        { "value": "shield", "label": "Shield" },
+        { "value": "award", "label": "Award" },
+        { "value": "leaf", "label": "Leaf" },
+        { "value": "layers", "label": "Layers" }
+      ],
+      "default": "award"
+    },
+    {
+      "type": "text",
+      "id": "trust_text_3",
+      "label": "Trust item 3 text",
+      "default": "GMP Certified"
+    },
+    {
+      "type": "select",
+      "id": "trust_icon_4",
+      "label": "Trust item 4 icon",
+      "options": [
+        { "value": "shield", "label": "Shield" },
+        { "value": "award", "label": "Award" },
+        { "value": "leaf", "label": "Leaf" },
+        { "value": "layers", "label": "Layers" }
+      ],
+      "default": "leaf"
+    },
+    {
+      "type": "text",
+      "id": "trust_text_4",
+      "label": "Trust item 4 text",
+      "default": "Cruelty Free"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero Banner"
+    }
+  ]
+}
+{% endschema %}

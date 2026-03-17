@@ -1,0 +1,289 @@
+<!-- ══ BLOG POSTS SECTION ══ -->
+{%- liquid
+  assign blog_handle = section.settings.blog | default: 'skin-care-insights'
+  assign posts_to_show = section.settings.posts_to_show | default: 4
+  assign featured_blog = blogs[blog_handle]
+-%}
+
+<section class="blog-sec" aria-labelledby="blog-title">
+  <div class="wrap">
+
+    <p class="sec-eyebrow">{{ section.settings.eyebrow | default: 'FROM THE LAB' }}</p>
+    <h2 class="sec-ttl" id="blog-title">{{ section.settings.title | default: 'SKIN CARE INSIGHTS' }}</h2>
+    <div class="sec-rule" aria-hidden="true"></div>
+
+    <div class="sl-wrap" id="blogWrap" role="region" aria-label="Blog posts">
+      <button class="sl-arrow prev" id="blogPrev" aria-label="Previous blog posts">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+
+      <div class="sl-track" id="blogTrack" role="list">
+
+        {%- if featured_blog != blank and featured_blog.articles_count > 0 -%}
+          {%- for article in featured_blog.articles limit: posts_to_show -%}
+            <article class="blog-card" role="listitem" itemscope itemtype="https://schema.org/BlogPosting">
+
+              <!-- Featured image -->
+              <a href="{{ article.url }}" class="blog-img-wrap" aria-label="{{ article.title | escape }}">
+                {%- if article.image != blank -%}
+                  <img
+                    src="{{ article.image | img_url: '400x240', crop: 'center' }}"
+                    alt="{{ article.image.alt | default: article.title | escape }}"
+                    loading="lazy"
+                    width="400"
+                    height="240"
+                    itemprop="image"
+                  >
+                {%- else -%}
+                  <div class="blog-img-placeholder" aria-hidden="true">
+                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#ccc" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                  </div>
+                {%- endif -%}
+              </a>
+
+              <div class="blog-body">
+                <!-- Tags / category -->
+                {%- if article.tags.size > 0 -%}
+                  <p class="blog-tag">{{ article.tags.first }}</p>
+                {%- endif -%}
+
+                <!-- Title -->
+                <h3 class="blog-ttl" itemprop="headline">
+                  <a href="{{ article.url }}">{{ article.title | truncate: 60 }}</a>
+                </h3>
+
+                <!-- Excerpt -->
+                {%- if article.excerpt != blank -%}
+                  <p class="blog-excerpt" itemprop="description">
+                    {{ article.excerpt | strip_html | truncate: 100 }}
+                  </p>
+                {%- endif -%}
+
+                <!-- Meta -->
+                <div class="blog-meta">
+                  <time
+                    datetime="{{ article.published_at | date: '%Y-%m-%d' }}"
+                    itemprop="datePublished"
+                    class="blog-date"
+                  >
+                    {{ article.published_at | date: '%b %d, %Y' }}
+                  </time>
+                  <span class="blog-read">{{ article.content | strip_html | number_of_words | divided_by: 200 | plus: 1 }} min read</span>
+                </div>
+
+                <a href="{{ article.url }}" class="blog-read-more">
+                  READ MORE →
+                </a>
+              </div>
+
+            </article>
+          {%- endfor -%}
+
+        {%- else -%}
+          <!-- Manual fallback blocks when no blog is assigned -->
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'blog_post' -%}
+            <article class="blog-card" role="listitem" {{ block.shopify_attributes }}>
+
+              <a href="{{ block.settings.post_url | default: '/blogs/news' }}" class="blog-img-wrap" aria-label="{{ block.settings.title }}">
+                {%- if block.settings.post_image != blank -%}
+                  <img
+                    src="{{ block.settings.post_image | img_url: '400x240', crop: 'center' }}"
+                    alt="{{ block.settings.title | escape }}"
+                    loading="lazy"
+                    width="400"
+                    height="240"
+                  >
+                {%- else -%}
+                  <div class="blog-img-placeholder" aria-hidden="true">
+                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#ccc" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                  </div>
+                {%- endif -%}
+              </a>
+
+              <div class="blog-body">
+                {%- if block.settings.tag != blank -%}
+                  <p class="blog-tag">{{ block.settings.tag }}</p>
+                {%- endif -%}
+                <h3 class="blog-ttl">
+                  <a href="{{ block.settings.post_url | default: '/blogs/news' }}">{{ block.settings.title }}</a>
+                </h3>
+                <p class="blog-excerpt">{{ block.settings.excerpt }}</p>
+                <div class="blog-meta">
+                  <span class="blog-date">{{ block.settings.date }}</span>
+                  <span class="blog-read">{{ block.settings.read_time }} min read</span>
+                </div>
+                <a href="{{ block.settings.post_url | default: '/blogs/news' }}" class="blog-read-more">READ MORE →</a>
+              </div>
+
+            </article>
+            {%- endif -%}
+          {%- endfor -%}
+        {%- endif -%}
+
+      </div><!-- /sl-track -->
+
+      <button class="sl-arrow next" id="blogNext" aria-label="Next blog posts">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+    </div><!-- /sl-wrap -->
+
+    <div class="sl-dots" id="blogDots" role="tablist" aria-label="Blog navigation"></div>
+
+    {%- if section.settings.show_view_all -%}
+      <div style="text-align:center;margin-top:28px">
+        <a href="{{ blogs[blog_handle].url | default: '/blogs/news' }}" class="btn-blk">
+          {{ section.settings.view_all_label | default: 'VIEW ALL ARTICLES' }}
+        </a>
+      </div>
+    {%- endif -%}
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Blog Posts",
+  "tag": "div",
+  "class": "blog-wrapper",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow text",
+      "default": "FROM THE LAB"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section title",
+      "default": "SKIN CARE INSIGHTS"
+    },
+    {
+      "type": "blog",
+      "id": "blog",
+      "label": "Blog to display"
+    },
+    {
+      "type": "range",
+      "id": "posts_to_show",
+      "min": 2,
+      "max": 6,
+      "step": 1,
+      "label": "Posts to show",
+      "default": 4
+    },
+    {
+      "type": "checkbox",
+      "id": "show_view_all",
+      "label": "Show View All button",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "view_all_label",
+      "label": "View All button label",
+      "default": "VIEW ALL ARTICLES"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "blog_post",
+      "name": "Manual Blog Post",
+      "limit": 6,
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Post title",
+          "default": "Why SPF Is Your Skin's Best Friend"
+        },
+        {
+          "type": "textarea",
+          "id": "excerpt",
+          "label": "Excerpt",
+          "default": "Dermatologists agree: daily sun protection is the single most effective anti-aging habit you can build."
+        },
+        {
+          "type": "image_picker",
+          "id": "post_image",
+          "label": "Featured image"
+        },
+        {
+          "type": "url",
+          "id": "post_url",
+          "label": "Post URL"
+        },
+        {
+          "type": "text",
+          "id": "tag",
+          "label": "Category tag",
+          "default": "SUN CARE"
+        },
+        {
+          "type": "text",
+          "id": "date",
+          "label": "Publish date",
+          "default": "March 2025"
+        },
+        {
+          "type": "range",
+          "id": "read_time",
+          "min": 1,
+          "max": 15,
+          "step": 1,
+          "label": "Read time (minutes)",
+          "default": 3
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Blog Posts",
+      "blocks": [
+        {
+          "type": "blog_post",
+          "settings": {
+            "title": "Why SPF Is Your Skin's Best Friend",
+            "excerpt": "Dermatologists agree: daily sun protection is the single most effective anti-aging step you can build into your routine.",
+            "tag": "SUN CARE",
+            "date": "March 2025",
+            "read_time": 3
+          }
+        },
+        {
+          "type": "blog_post",
+          "settings": {
+            "title": "Hyaluronic Acid: The Science of Deep Hydration",
+            "excerpt": "Learn how Hyaluronic Acid holds up to 1000x its weight in water and why it belongs in every skincare routine.",
+            "tag": "INGREDIENTS",
+            "date": "February 2025",
+            "read_time": 4
+          }
+        },
+        {
+          "type": "blog_post",
+          "settings": {
+            "title": "Building a Skincare Routine for Pakistani Climate",
+            "excerpt": "Hot, humid summers and dry winters require a skincare strategy designed specifically for Pakistan's unique climate zones.",
+            "tag": "ROUTINES",
+            "date": "January 2025",
+            "read_time": 5
+          }
+        },
+        {
+          "type": "blog_post",
+          "settings": {
+            "title": "What DRAP Certification Really Means for Your Skincare",
+            "excerpt": "Understanding Pakistan's Drug Regulatory Authority certification and why it matters for the products you put on your skin.",
+            "tag": "SCIENCE",
+            "date": "December 2024",
+            "read_time": 4
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,258 @@
+<!-- ══ FOOTER ══ -->
+<footer class="site-footer" role="contentinfo">
+  <div class="wrap">
+
+    <div class="foot-grid">
+
+      <!-- Column 1: Brand -->
+      <div class="foot-col foot-brand-col">
+        <div class="foot-logo">
+          {%- if section.settings.footer_logo != blank -%}
+            {{ section.settings.footer_logo | img_url: '160x' | img_tag: shop.name, 'footer-logo-img' }}
+          {%- else -%}
+            {{ shop.name | upcase }}<sup>™</sup>
+          {%- endif -%}
+        </div>
+        <p class="foot-tagline">{{ section.settings.tagline }}</p>
+        {%- if section.settings.show_social -%}
+        <div class="foot-social" aria-label="Social media links">
+          {%- if section.settings.instagram_url != blank -%}
+            <a href="{{ section.settings.instagram_url }}" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="foot-social-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+            </a>
+          {%- endif -%}
+          {%- if section.settings.facebook_url != blank -%}
+            <a href="{{ section.settings.facebook_url }}" target="_blank" rel="noopener noreferrer" aria-label="Facebook" class="foot-social-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+            </a>
+          {%- endif -%}
+          {%- if section.settings.tiktok_url != blank -%}
+            <a href="{{ section.settings.tiktok_url }}" target="_blank" rel="noopener noreferrer" aria-label="TikTok" class="foot-social-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.78 1.52V6.74a4.85 4.85 0 01-1.01-.05z"/></svg>
+            </a>
+          {%- endif -%}
+        </div>
+        {%- endif -%}
+      </div>
+
+      <!-- Column 2: Quick Links -->
+      <div class="foot-col">
+        <h3 class="foot-col-ttl">QUICK LINKS</h3>
+        <ul class="foot-links" role="list">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'quick_link' -%}
+              <li {{ block.shopify_attributes }}><a href="{{ block.settings.link_url }}">{{ block.settings.link_label }}</a></li>
+            {%- endif -%}
+          {%- endfor -%}
+        </ul>
+      </div>
+
+      <!-- Column 3: Help -->
+      <div class="foot-col">
+        <h3 class="foot-col-ttl">HELP & SUPPORT</h3>
+        <ul class="foot-links" role="list">
+          <li><a href="/pages/shipping">Shipping Policy</a></li>
+          <li><a href="/pages/returns">Returns & Exchanges</a></li>
+          <li><a href="/pages/track-order">Track My Order</a></li>
+          <li><a href="/pages/faq">FAQ</a></li>
+          <li><a href="/pages/contact">Contact Us</a></li>
+        </ul>
+        {%- if section.settings.whatsapp_number != blank -%}
+        <a href="https://wa.me/{{ section.settings.whatsapp_number }}"
+           target="_blank" rel="noopener noreferrer"
+           class="foot-wa-btn" aria-label="Chat on WhatsApp">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/></svg>
+          WhatsApp Support
+        </a>
+        {%- endif -%}
+      </div>
+
+      <!-- Column 4: Certifications / Newsletter -->
+      <div class="foot-col">
+        <h3 class="foot-col-ttl">CERTIFICATIONS</h3>
+        <div class="foot-certs">
+          <span class="foot-cert-badge">PCSIR</span>
+          <span class="foot-cert-badge">DRAP</span>
+          <span class="foot-cert-badge">GMP</span>
+          <span class="foot-cert-badge">🌿 HALAL</span>
+          <span class="foot-cert-badge">CRUELTY FREE</span>
+        </div>
+
+        {%- if section.settings.show_newsletter -%}
+        <div class="foot-newsletter">
+          <p class="foot-newsletter-title">{{ section.settings.newsletter_title | default: 'GET SKIN TIPS & OFFERS' }}</p>
+          {%- form 'customer' -%}
+            <input type="hidden" name="contact[tags]" value="newsletter">
+            <div class="foot-email-wrap">
+              <input type="email"
+                     name="contact[email]"
+                     placeholder="{{ section.settings.email_placeholder | default: 'Your email address' }}"
+                     class="foot-email-inp"
+                     aria-label="Email address for newsletter"
+                     required>
+              <button type="submit" class="foot-email-btn" aria-label="Subscribe">
+                →
+              </button>
+            </div>
+          {%- endform -%}
+        </div>
+        {%- endif -%}
+      </div>
+
+    </div><!-- /foot-grid -->
+
+    <!-- Medical Disclaimer -->
+    <div class="foot-disclaimer">
+      <p>
+        <strong>MEDICAL DISCLAIMER:</strong>
+        OSISS™ products are for cosmetic purposes only. We do not claim to cure, treat, or prevent any medical condition or disease.
+        Results may vary. Always perform a 24-hour patch test before full application. Consult a dermatologist before use if you have any skin conditions.
+      </p>
+    </div>
+
+    <!-- Bottom bar -->
+    <div class="foot-bottom">
+      <div class="pay-badges" aria-label="Accepted payment methods">
+        <span class="pay-visa" aria-label="Visa">VISA</span>
+        <span class="pay-jazz" aria-label="JazzCash">JazzCash</span>
+        <span class="pay-cod" aria-label="Cash on Delivery">COD</span>
+        <span class="pay-easypaisa" aria-label="EasyPaisa">EasyPaisa</span>
+      </div>
+      <p class="foot-copy">
+        &copy; {{ 'now' | date: '%Y' }} {{ section.settings.company_name | default: 'OSISS Enterprises (Pvt) Ltd.' }}
+        All rights reserved. {{ section.settings.location | default: 'Lahore, Pakistan.' }}
+      </p>
+    </div>
+
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "tag": "div",
+  "class": "footer-wrapper",
+  "limit": 1,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Brand"
+    },
+    {
+      "type": "image_picker",
+      "id": "footer_logo",
+      "label": "Footer logo (optional)"
+    },
+    {
+      "type": "text",
+      "id": "tagline",
+      "label": "Brand tagline",
+      "default": "Science-backed skincare for every skin type. Dermatologist trusted, community loved."
+    },
+    {
+      "type": "header",
+      "content": "Social Links"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_social",
+      "label": "Show social links",
+      "default": true
+    },
+    {
+      "type": "url",
+      "id": "instagram_url",
+      "label": "Instagram URL"
+    },
+    {
+      "type": "url",
+      "id": "facebook_url",
+      "label": "Facebook URL"
+    },
+    {
+      "type": "url",
+      "id": "tiktok_url",
+      "label": "TikTok URL"
+    },
+    {
+      "type": "header",
+      "content": "Contact"
+    },
+    {
+      "type": "text",
+      "id": "whatsapp_number",
+      "label": "WhatsApp number (with country code, no +)",
+      "default": "923021345111"
+    },
+    {
+      "type": "header",
+      "content": "Newsletter"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_newsletter",
+      "label": "Show newsletter signup",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "newsletter_title",
+      "label": "Newsletter title",
+      "default": "GET SKIN TIPS & OFFERS"
+    },
+    {
+      "type": "text",
+      "id": "email_placeholder",
+      "label": "Email placeholder",
+      "default": "Your email address"
+    },
+    {
+      "type": "header",
+      "content": "Company Info"
+    },
+    {
+      "type": "text",
+      "id": "company_name",
+      "label": "Legal company name",
+      "default": "OSISS Enterprises (Pvt) Ltd."
+    },
+    {
+      "type": "text",
+      "id": "location",
+      "label": "Location",
+      "default": "Lahore, Pakistan."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "quick_link",
+      "name": "Quick Link",
+      "settings": [
+        {
+          "type": "text",
+          "id": "link_label",
+          "label": "Link label",
+          "default": "Shop All"
+        },
+        {
+          "type": "url",
+          "id": "link_url",
+          "label": "Link URL"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Footer",
+      "blocks": [
+        { "type": "quick_link", "settings": { "link_label": "Shop All", "link_url": "/collections/all" } },
+        { "type": "quick_link", "settings": { "link_label": "Face Care", "link_url": "/collections/face" } },
+        { "type": "quick_link", "settings": { "link_label": "Sun Care", "link_url": "/collections/sun-care" } },
+        { "type": "quick_link", "settings": { "link_label": "Hair Care", "link_url": "/collections/hair" } },
+        { "type": "quick_link", "settings": { "link_label": "Bundles", "link_url": "/collections/bundles" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

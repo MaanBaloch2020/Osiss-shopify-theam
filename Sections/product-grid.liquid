@@ -1,0 +1,336 @@
+<!-- ══ PRODUCT GRID SECTION ══ -->
+{%- liquid
+  assign bg_class = section.settings.background_style
+  assign collection_handle = section.settings.collection
+  assign current_collection = collections[collection_handle]
+  assign products_to_show = section.settings.products_to_show | default: 4
+-%}
+
+<section
+  id="{{ section.settings.section_id | default: 'product-section-' | append: section.id }}"
+  class="prod-section {{ bg_class }}"
+  aria-labelledby="prod-title-{{ section.id }}"
+>
+  <div class="wrap">
+
+    {%- if section.settings.eyebrow != blank -%}
+      <p class="sec-eyebrow">{{ section.settings.eyebrow }}</p>
+    {%- endif -%}
+
+    <h2 class="sec-ttl" id="prod-title-{{ section.id }}">{{ section.settings.title }}</h2>
+    <div class="sec-rule" aria-hidden="true"></div>
+
+    <!-- View All Link -->
+    {%- if section.settings.show_view_all and section.settings.view_all_url != blank -%}
+      <div style="text-align:right;margin-bottom:16px">
+        <a href="{{ section.settings.view_all_url }}" class="view-all-link">
+          VIEW ALL →
+        </a>
+      </div>
+    {%- endif -%}
+
+    <div class="pgrid" role="list">
+
+      {%- if current_collection != blank and current_collection.products_count > 0 -%}
+        {%- for product in current_collection.products limit: products_to_show -%}
+          <div class="pcard" role="listitem" data-product-id="{{ product.id }}">
+
+            <!-- Product image -->
+            <a href="{{ product.url }}" class="pimg-wrap" aria-label="{{ product.title }}">
+              {%- if product.featured_image != blank -%}
+                {{ product.featured_image | img_url: '400x' | img_tag: product.title, 'prod-img' }}
+              {%- else -%}
+                <div class="pimg-placeholder" aria-hidden="true">
+                  <svg width="60" height="60" viewBox="0 0 60 60" fill="none"><rect width="60" height="60" fill="#f0f0f0" rx="4"/><path d="M20 40l8-12 6 8 4-6 10 14H16" fill="#ccc"/><circle cx="40" cy="22" r="5" fill="#ccc"/></svg>
+                </div>
+              {%- endif -%}
+
+              <!-- Badge -->
+              {%- if product.tags contains 'bestseller' -%}
+                <span class="pbadge bestseller" aria-label="Best Seller">BEST SELLER</span>
+              {%- elsif product.tags contains 'featured' -%}
+                <span class="pbadge featured" aria-label="Featured">FEATURED</span>
+              {%- elsif product.tags contains 'new' -%}
+                <span class="pbadge newarrival" aria-label="New Arrival">NEW</span>
+              {%- endif -%}
+            </a>
+
+            <div class="pcard-body">
+
+              <!-- Stars -->
+              <div class="stars" role="img" aria-label="5 star rating">
+                {%- for i in (1..5) -%}
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="{{ '#f5a623' }}" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                {%- endfor -%}
+              </div>
+
+              <p class="pname">{{ product.title | upcase }}</p>
+              <p class="psub">{{ product.type }}</p>
+
+              <!-- Price -->
+              <div class="pprice">
+                {%- if product.compare_at_price > product.price -%}
+                  <span style="text-decoration:line-through;color:#aaa;font-size:9.5px;margin-right:5px">
+                    PKR {{ product.compare_at_price | money_without_currency }}
+                  </span>
+                {%- endif -%}
+                <span>PKR {{ product.price | money_without_currency }}</span>
+                {%- if product.compare_at_price > product.price -%}
+                  {%- assign saving_pct = product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price -%}
+                  <span style="font-size:8px;color:#e44;font-weight:700;margin-left:4px">{{ saving_pct }}% OFF</span>
+                {%- endif -%}
+              </div>
+
+              <!-- Patch note -->
+              {%- if product.metafields.custom.patch_note != blank -%}
+                <p class="patch-note">{{ product.metafields.custom.patch_note }}</p>
+              {%- else -%}
+                <p class="patch-note">✓ Dermatologist Tested &nbsp;·&nbsp; ✓ All Skin Types</p>
+              {%- endif -%}
+
+            </div><!-- /pcard-body -->
+
+            <!-- Add to Cart -->
+            {%- form 'product', product, data-type: 'add-to-cart-form' -%}
+              <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+              {%- if product.available -%}
+                <button type="submit" class="btn-atc" aria-label="Add {{ product.title }} to cart">
+                  ADD TO CART
+                </button>
+              {%- else -%}
+                <button type="button" class="btn-atc" disabled style="background:#ccc;cursor:not-allowed">
+                  SOLD OUT
+                </button>
+              {%- endif -%}
+            {%- endform -%}
+
+          </div><!-- /pcard -->
+        {%- endfor -%}
+
+      {%- else -%}
+        <!-- Fallback: show placeholder cards if no collection set -->
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'product_card' -%}
+          <div class="pcard" role="listitem" {{ block.shopify_attributes }}>
+            <div class="pimg-wrap">
+              {%- if block.settings.product_image != blank -%}
+                {{ block.settings.product_image | img_url: '400x' | img_tag: block.settings.product_name, 'prod-img' }}
+              {%- else -%}
+                <div class="pimg-placeholder" aria-hidden="true">
+                  <svg width="60" height="60" viewBox="0 0 60 60" fill="none"><rect width="60" height="60" fill="#f0f0f0" rx="4"/><path d="M20 40l8-12 6 8 4-6 10 14H16" fill="#ccc"/><circle cx="40" cy="22" r="5" fill="#ccc"/></svg>
+                </div>
+              {%- endif -%}
+              {%- if block.settings.badge != blank -%}
+                <span class="pbadge {{ block.settings.badge_style }}">{{ block.settings.badge }}</span>
+              {%- endif -%}
+            </div>
+            <div class="pcard-body">
+              <div class="stars" role="img" aria-label="5 star rating">
+                {%- for i in (1..5) -%}
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="#f5a623" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                {%- endfor -%}
+              </div>
+              <p class="pname">{{ block.settings.product_name | upcase }}</p>
+              <p class="psub">{{ block.settings.product_sub }}</p>
+              <div class="pprice">
+                {%- if block.settings.original_price != blank -%}
+                  <span style="text-decoration:line-through;color:#aaa;font-size:9.5px;margin-right:5px">PKR {{ block.settings.original_price }}</span>
+                {%- endif -%}
+                <span>PKR {{ block.settings.price }}</span>
+              </div>
+              <p class="patch-note">✓ Dermatologist Tested &nbsp;·&nbsp; ✓ All Skin Types</p>
+            </div>
+            <a href="{{ block.settings.product_url }}" class="btn-atc">ADD TO CART</a>
+          </div>
+          {%- endif -%}
+        {%- endfor -%}
+      {%- endif -%}
+
+    </div><!-- /pgrid -->
+
+    <!-- Bottom CTA -->
+    {%- if section.settings.show_bottom_cta -%}
+      <div style="text-align:center;margin-top:32px">
+        <a href="{{ section.settings.view_all_url | default: '/collections/all' }}" class="btn-blk">
+          {{ section.settings.bottom_cta_label | default: 'VIEW ALL PRODUCTS' }}
+        </a>
+      </div>
+    {%- endif -%}
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Product Grid",
+  "tag": "div",
+  "class": "product-grid-wrapper",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Identity"
+    },
+    {
+      "type": "text",
+      "id": "section_id",
+      "label": "HTML ID (for anchor links)",
+      "default": "sec-featured"
+    },
+    {
+      "type": "select",
+      "id": "background_style",
+      "label": "Background",
+      "options": [
+        { "value": "grey", "label": "Light Grey" },
+        { "value": "white", "label": "White" }
+      ],
+      "default": "grey"
+    },
+    {
+      "type": "header",
+      "content": "Headings"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow text",
+      "default": "HANDPICKED FOR YOU"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section title",
+      "default": "FEATURED PRODUCTS"
+    },
+    {
+      "type": "header",
+      "content": "Products"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection to display"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "min": 2,
+      "max": 8,
+      "step": 2,
+      "label": "Products to show",
+      "default": 4
+    },
+    {
+      "type": "header",
+      "content": "Links & CTAs"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_view_all",
+      "label": "Show 'View All' top link",
+      "default": false
+    },
+    {
+      "type": "url",
+      "id": "view_all_url",
+      "label": "View All URL"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_bottom_cta",
+      "label": "Show bottom CTA button",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "bottom_cta_label",
+      "label": "Bottom CTA label",
+      "default": "VIEW ALL PRODUCTS"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product_card",
+      "name": "Product Card (Manual)",
+      "limit": 8,
+      "settings": [
+        {
+          "type": "text",
+          "id": "product_name",
+          "label": "Product name"
+        },
+        {
+          "type": "text",
+          "id": "product_sub",
+          "label": "Product subtitle"
+        },
+        {
+          "type": "image_picker",
+          "id": "product_image",
+          "label": "Product image"
+        },
+        {
+          "type": "text",
+          "id": "price",
+          "label": "Sale price"
+        },
+        {
+          "type": "text",
+          "id": "original_price",
+          "label": "Original price (optional)"
+        },
+        {
+          "type": "url",
+          "id": "product_url",
+          "label": "Product URL"
+        },
+        {
+          "type": "text",
+          "id": "badge",
+          "label": "Badge text (e.g. BEST SELLER)"
+        },
+        {
+          "type": "select",
+          "id": "badge_style",
+          "label": "Badge style",
+          "options": [
+            { "value": "bestseller", "label": "Best Seller (black)" },
+            { "value": "featured", "label": "Featured (black)" },
+            { "value": "newarrival", "label": "New Arrival (outlined)" }
+          ],
+          "default": "bestseller"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured Products",
+      "settings": {
+        "eyebrow": "HANDPICKED FOR YOU",
+        "title": "FEATURED PRODUCTS",
+        "section_id": "sec-featured",
+        "background_style": "grey"
+      }
+    },
+    {
+      "name": "Best Sellers",
+      "settings": {
+        "eyebrow": "CUSTOMER FAVOURITES",
+        "title": "BEST SELLERS",
+        "section_id": "sec-bestseller",
+        "background_style": "white"
+      }
+    },
+    {
+      "name": "New Arrivals",
+      "settings": {
+        "eyebrow": "JUST LANDED",
+        "title": "NEW ARRIVALS",
+        "section_id": "sec-new",
+        "background_style": "grey"
+      }
+    }
+  ]
+}
+{% endschema %}

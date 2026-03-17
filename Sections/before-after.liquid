@@ -1,0 +1,228 @@
+<!-- ══ BEFORE & AFTER SECTION ══ -->
+<section class="bna-sec" aria-labelledby="bna-title">
+  <div class="wrap">
+
+    <p class="sec-eyebrow">{{ section.settings.eyebrow | default: 'CLINICAL RESULTS' }}</p>
+    <h2 class="sec-ttl" id="bna-title">{{ section.settings.title | default: 'VISIBLE RESULTS — BEFORE & AFTER' }}</h2>
+    <div class="sec-rule" aria-hidden="true"></div>
+
+    <!-- Slider -->
+    <div class="sl-wrap" id="bnaWrap" role="region" aria-label="Before and after results">
+      <button class="sl-arrow prev" id="bnaPrev" aria-label="Previous result">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+
+      <div class="sl-track" id="bnaTrack" role="list">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'result_card' -%}
+          <div class="bna-card" role="listitem" {{ block.shopify_attributes }}>
+
+            <!-- Before / After image pair -->
+            <div class="bna-pair">
+
+              <div class="bna-img before" role="img" aria-label="Before: {{ block.settings.result_claim }}">
+                {%- if block.settings.before_image != blank -%}
+                  <img
+                    src="{{ block.settings.before_image | img_url: '400x400', crop: 'center' }}"
+                    alt="Before - {{ block.settings.product_name }}"
+                    loading="lazy"
+                    width="200"
+                    height="200"
+                  >
+                {%- else -%}
+                  <!-- Placeholder face illustration (before) -->
+                  <svg width="80" height="80" viewBox="0 0 100 100" fill="none" aria-hidden="true">
+                    <circle cx="50" cy="50" r="40" fill="#d8d8d8"/>
+                    <circle cx="36" cy="42" r="5" fill="#bbb"/>
+                    <circle cx="64" cy="42" r="5" fill="#bbb"/>
+                    <!-- Acne spots -->
+                    <circle cx="44" cy="58" r="3.5" fill="#c8a090"/>
+                    <circle cx="57" cy="55" r="2.5" fill="#c8a090"/>
+                    <circle cx="38" cy="52" r="2" fill="#c8a090"/>
+                    <circle cx="63" cy="60" r="2.5" fill="#c8a090"/>
+                    <path d="M38 68 Q50 74 62 68" stroke="#999" stroke-width="2" fill="none" stroke-linecap="round"/>
+                  </svg>
+                {%- endif -%}
+                <span class="bna-label">BEFORE</span>
+              </div>
+
+              <!-- Divider -->
+              <div class="bna-divider" aria-hidden="true"></div>
+
+              <div class="bna-img after" role="img" aria-label="After: {{ block.settings.result_claim }}">
+                {%- if block.settings.after_image != blank -%}
+                  <img
+                    src="{{ block.settings.after_image | img_url: '400x400', crop: 'center' }}"
+                    alt="After - {{ block.settings.product_name }}"
+                    loading="lazy"
+                    width="200"
+                    height="200"
+                  >
+                {%- else -%}
+                  <!-- Placeholder face illustration (after) -->
+                  <svg width="80" height="80" viewBox="0 0 100 100" fill="none" aria-hidden="true">
+                    <circle cx="50" cy="50" r="40" fill="#c2d4de"/>
+                    <circle cx="36" cy="42" r="5" fill="#90b8c8"/>
+                    <circle cx="64" cy="42" r="5" fill="#90b8c8"/>
+                    <!-- Clear skin sparkles -->
+                    <path d="M45 60 L46.5 56 L48 60 L52 61.5 L48 63 L46.5 67 L45 63 L41 61.5Z" fill="#6ad8c0" opacity=".8"/>
+                    <path d="M38 68 Q50 76 62 68" stroke="#6aaa88" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+                  </svg>
+                {%- endif -%}
+                <span class="bna-label" style="background:rgba(42,144,80,.85)">AFTER</span>
+              </div>
+
+            </div><!-- /bna-pair -->
+
+            <!-- Card info -->
+            <div class="bna-info">
+              <p class="bna-product">{{ block.settings.product_name }}</p>
+              <p class="bna-claim">{{ block.settings.result_claim }}</p>
+              <p class="bna-weeks">
+                {%- if block.settings.timeframe != blank -%}
+                  {{ block.settings.timeframe }} results
+                {%- endif -%}
+                {%- if block.settings.skin_concern != blank -%}
+                  &nbsp;·&nbsp; {{ block.settings.skin_concern }}
+                {%- endif -%}
+              </p>
+              {%- if block.settings.show_cta -%}
+                <a href="{{ block.settings.cta_url | default: '/collections/all' }}" class="bna-cta-link">
+                  SHOP THIS PRODUCT →
+                </a>
+              {%- endif -%}
+            </div>
+
+          </div><!-- /bna-card -->
+          {%- endif -%}
+        {%- endfor -%}
+      </div><!-- /sl-track -->
+
+      <button class="sl-arrow next" id="bnaNext" aria-label="Next result">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+    </div><!-- /sl-wrap -->
+
+    <div class="sl-dots" id="bnaDots" role="tablist" aria-label="Result navigation"></div>
+
+    {%- if section.settings.disclaimer != blank -%}
+      <p class="bna-disclaimer">{{ section.settings.disclaimer }}</p>
+    {%- endif -%}
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Before & After",
+  "tag": "div",
+  "class": "bna-wrapper",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow text",
+      "default": "CLINICAL RESULTS"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section title",
+      "default": "VISIBLE RESULTS — BEFORE & AFTER"
+    },
+    {
+      "type": "textarea",
+      "id": "disclaimer",
+      "label": "Disclaimer text (optional)",
+      "default": "* Individual results may vary. Always perform a patch test before use."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "result_card",
+      "name": "Result Card",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "before_image",
+          "label": "Before image"
+        },
+        {
+          "type": "image_picker",
+          "id": "after_image",
+          "label": "After image"
+        },
+        {
+          "type": "text",
+          "id": "product_name",
+          "label": "Product used",
+          "default": "Revitalizing Face Serum"
+        },
+        {
+          "type": "text",
+          "id": "result_claim",
+          "label": "Result headline",
+          "default": "Visible reduction in dark spots"
+        },
+        {
+          "type": "text",
+          "id": "timeframe",
+          "label": "Timeframe",
+          "default": "4-week"
+        },
+        {
+          "type": "text",
+          "id": "skin_concern",
+          "label": "Skin concern",
+          "default": "Hyperpigmentation"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_cta",
+          "label": "Show Shop CTA link",
+          "default": true
+        },
+        {
+          "type": "url",
+          "id": "cta_url",
+          "label": "CTA link URL"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Before & After Results",
+      "blocks": [
+        {
+          "type": "result_card",
+          "settings": {
+            "product_name": "Revitalizing Face Serum",
+            "result_claim": "Visible reduction in dark spots",
+            "timeframe": "4-week",
+            "skin_concern": "Hyperpigmentation"
+          }
+        },
+        {
+          "type": "result_card",
+          "settings": {
+            "product_name": "Optimal Sunscreen Stick SPF 50+",
+            "result_claim": "Noticeably brighter, even skin tone",
+            "timeframe": "6-week",
+            "skin_concern": "Sun Damage"
+          }
+        },
+        {
+          "type": "result_card",
+          "settings": {
+            "product_name": "Scalp Healing Oil",
+            "result_claim": "Significant reduction in scalp flaking",
+            "timeframe": "3-week",
+            "skin_concern": "Scalp Health"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

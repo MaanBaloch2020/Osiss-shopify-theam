@@ -1,0 +1,401 @@
+<!-- ══ BUNDLES SECTION ══ -->
+<section class="bundles-sec" aria-labelledby="bundles-title">
+  <div class="wrap">
+
+    <p class="sec-eyebrow">{{ section.settings.eyebrow | default: 'SAVE MORE TOGETHER' }}</p>
+    <h2 class="sec-ttl" id="bundles-title">{{ section.settings.title | default: 'CURATED BUNDLES' }}</h2>
+    <div class="sec-rule" aria-hidden="true"></div>
+
+    {%- if section.settings.subtitle != blank -%}
+      <p class="bundles-subtitle">{{ section.settings.subtitle }}</p>
+    {%- endif -%}
+
+    <!-- Discount tier info bar -->
+    {%- if section.settings.show_tier_bar -%}
+    <div class="bundle-tier-bar" aria-label="Bundle discount tiers">
+      <div class="bundle-tier-item">
+        <span class="bti-qty">2 items</span>
+        <span class="bti-disc">{{ section.settings.tier_2 | default: '5% OFF' }}</span>
+      </div>
+      <div class="bundle-tier-divider" aria-hidden="true">→</div>
+      <div class="bundle-tier-item">
+        <span class="bti-qty">3 items</span>
+        <span class="bti-disc">{{ section.settings.tier_3 | default: '10% OFF' }}</span>
+      </div>
+      <div class="bundle-tier-divider" aria-hidden="true">→</div>
+      <div class="bundle-tier-item">
+        <span class="bti-qty">4 items</span>
+        <span class="bti-disc">{{ section.settings.tier_4 | default: '15% OFF' }}</span>
+      </div>
+      <div class="bundle-tier-divider" aria-hidden="true">→</div>
+      <div class="bundle-tier-item bundle-tier-item--best">
+        <span class="bti-qty">5 items</span>
+        <span class="bti-disc">{{ section.settings.tier_5 | default: '20% OFF 🎉' }}</span>
+      </div>
+    </div>
+    {%- endif -%}
+
+    <!-- Bundle cards grid -->
+    <div class="bundles-grid" role="list">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'bundle_card' -%}
+        <div class="bundle-card" role="listitem" {{ block.shopify_attributes }}>
+
+          <!-- Badge -->
+          {%- if block.settings.badge != blank -%}
+            <span class="bundle-badge">
+              {{ block.settings.badge }}
+              {%- if block.settings.original_price != blank and block.settings.sale_price != blank -%}
+                {%- assign orig = block.settings.original_price | times: 1 -%}
+                {%- assign sale = block.settings.sale_price | times: 1 -%}
+                {%- if orig > 0 -%}
+                  {%- assign disc_pct = orig | minus: sale | times: 100 | divided_by: orig | floor -%}
+                  &nbsp;· {{ disc_pct }}% OFF
+                {%- endif -%}
+              {%- endif -%}
+            </span>
+          {%- endif -%}
+
+          <!-- Product images -->
+          <div class="bundle-imgs" aria-label="Bundle products" role="img">
+            {%- if block.settings.product_1_image != blank -%}
+              <img src="{{ block.settings.product_1_image | img_url: '140x' }}" alt="Bundle product 1" class="bundle-prod-img" loading="lazy">
+            {%- else -%}
+              <!-- SVG placeholder -->
+              <svg width="52" height="80" viewBox="0 0 52 80" fill="none" aria-hidden="true">
+                <rect x="4" y="2" width="44" height="76" rx="8" fill="#e0e0e0" stroke="#ccc" stroke-width=".8"/>
+                <text x="26" y="38" text-anchor="middle" font-family="Montserrat,sans-serif" font-size="7" fill="#bbb" font-weight="700">OSISS</text>
+              </svg>
+            {%- endif -%}
+
+            {%- if block.settings.product_2_image != blank or block.settings.product_2_name != blank -%}
+              <span class="bundle-plus" aria-hidden="true">+</span>
+              {%- if block.settings.product_2_image != blank -%}
+                <img src="{{ block.settings.product_2_image | img_url: '140x' }}" alt="Bundle product 2" class="bundle-prod-img" loading="lazy">
+              {%- else -%}
+                <svg width="52" height="80" viewBox="0 0 52 80" fill="none" aria-hidden="true"><rect x="4" y="2" width="44" height="76" rx="8" fill="#e0e0e0" stroke="#ccc" stroke-width=".8"/><text x="26" y="38" text-anchor="middle" font-family="Montserrat,sans-serif" font-size="7" fill="#bbb" font-weight="700">OSISS</text></svg>
+              {%- endif -%}
+            {%- endif -%}
+
+            {%- if block.settings.product_3_image != blank or block.settings.product_3_name != blank -%}
+              <span class="bundle-plus" aria-hidden="true">+</span>
+              {%- if block.settings.product_3_image != blank -%}
+                <img src="{{ block.settings.product_3_image | img_url: '140x' }}" alt="Bundle product 3" class="bundle-prod-img" loading="lazy">
+              {%- else -%}
+                <svg width="52" height="80" viewBox="0 0 52 80" fill="none" aria-hidden="true"><rect x="4" y="2" width="44" height="76" rx="8" fill="#e0e0e0" stroke="#ccc" stroke-width=".8"/><text x="26" y="38" text-anchor="middle" font-family="Montserrat,sans-serif" font-size="7" fill="#bbb" font-weight="700">OSISS</text></svg>
+              {%- endif -%}
+            {%- endif -%}
+          </div>
+
+          <!-- Bundle info -->
+          <p class="bundle-name">{{ block.settings.bundle_name }}</p>
+          <p class="bundle-tagline">{{ block.settings.tagline }}</p>
+
+          <!-- Products list -->
+          <div class="bundle-items">
+            {%- if block.settings.product_1_name != blank -%}
+              <span>• {{ block.settings.product_1_name }}</span><br>
+            {%- endif -%}
+            {%- if block.settings.product_2_name != blank -%}
+              <span>• {{ block.settings.product_2_name }}</span><br>
+            {%- endif -%}
+            {%- if block.settings.product_3_name != blank -%}
+              <span>• {{ block.settings.product_3_name }}</span>
+            {%- endif -%}
+          </div>
+
+          <!-- Pricing -->
+          <div class="bundle-price-row">
+            {%- if block.settings.original_price != blank -%}
+              <span class="bundle-price-orig">PKR {{ block.settings.original_price | times: 1 | floor | append: '' }}</span>
+            {%- endif -%}
+            <span class="bundle-price-sale">PKR {{ block.settings.sale_price | times: 1 | floor | append: '' }}</span>
+          </div>
+
+          {%- if block.settings.save_label != blank -%}
+            <span class="bundle-save-chip">🎉 {{ block.settings.save_label }}</span>
+          {%- endif -%}
+
+          <!-- Viewers / urgency -->
+          {%- if section.settings.show_viewers -%}
+            <p class="bundle-viewers">🔥 {{ block.settings.viewers | default: '8' }} viewing right now</p>
+          {%- endif -%}
+
+          <!-- ATC -->
+          {%- if block.settings.bundle_url != blank -%}
+            <a href="{{ block.settings.bundle_url }}" class="bundle-atc" role="button">
+              ADD BUNDLE TO CART
+            </a>
+          {%- else -%}
+            <a href="/collections/bundles" class="bundle-atc" role="button">
+              ADD BUNDLE TO CART
+            </a>
+          {%- endif -%}
+
+        </div><!-- /bundle-card -->
+        {%- endif -%}
+      {%- endfor -%}
+    </div><!-- /bundles-grid -->
+
+    {%- if section.settings.show_custom_builder -%}
+      <div style="text-align:center;margin-top:32px">
+        <a href="{{ section.settings.builder_url | default: '/collections/all' }}" class="bundle-builder-cta" role="button">
+          <span>🎁</span>
+          {{ section.settings.builder_label | default: 'BUILD YOUR OWN BUNDLE & SAVE UP TO 20%' }}
+        </a>
+      </div>
+    {%- endif -%}
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Bundles",
+  "tag": "div",
+  "class": "bundles-wrapper",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow text",
+      "default": "SAVE MORE TOGETHER"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section title",
+      "default": "CURATED BUNDLES"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle (optional)",
+      "default": "Combine your favourites and save up to 20% with our exclusive bundle deals."
+    },
+    {
+      "type": "header",
+      "content": "Discount Tier Bar"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_tier_bar",
+      "label": "Show discount tier bar",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "tier_2",
+      "label": "2-item discount label",
+      "default": "5% OFF"
+    },
+    {
+      "type": "text",
+      "id": "tier_3",
+      "label": "3-item discount label",
+      "default": "10% OFF"
+    },
+    {
+      "type": "text",
+      "id": "tier_4",
+      "label": "4-item discount label",
+      "default": "15% OFF"
+    },
+    {
+      "type": "text",
+      "id": "tier_5",
+      "label": "5-item discount label",
+      "default": "20% OFF 🎉"
+    },
+    {
+      "type": "header",
+      "content": "Extras"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_viewers",
+      "label": "Show 'X viewing' urgency label",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_custom_builder",
+      "label": "Show 'Build Your Own Bundle' CTA",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "builder_label",
+      "label": "Bundle builder CTA label",
+      "default": "BUILD YOUR OWN BUNDLE & SAVE UP TO 20%"
+    },
+    {
+      "type": "url",
+      "id": "builder_url",
+      "label": "Bundle builder URL"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "bundle_card",
+      "name": "Bundle Card",
+      "limit": 6,
+      "settings": [
+        {
+          "type": "text",
+          "id": "badge",
+          "label": "Badge text",
+          "default": "BEST VALUE"
+        },
+        {
+          "type": "text",
+          "id": "bundle_name",
+          "label": "Bundle name",
+          "default": "The Glow Starter Kit"
+        },
+        {
+          "type": "text",
+          "id": "tagline",
+          "label": "Tagline",
+          "default": "Cleanse · Treat · Protect"
+        },
+        {
+          "type": "header",
+          "content": "Product 1"
+        },
+        {
+          "type": "text",
+          "id": "product_1_name",
+          "label": "Product 1 name",
+          "default": "Gentle Foaming Cleanser"
+        },
+        {
+          "type": "image_picker",
+          "id": "product_1_image",
+          "label": "Product 1 image"
+        },
+        {
+          "type": "header",
+          "content": "Product 2"
+        },
+        {
+          "type": "text",
+          "id": "product_2_name",
+          "label": "Product 2 name",
+          "default": "Revitalizing Face Serum"
+        },
+        {
+          "type": "image_picker",
+          "id": "product_2_image",
+          "label": "Product 2 image"
+        },
+        {
+          "type": "header",
+          "content": "Product 3 (optional)"
+        },
+        {
+          "type": "text",
+          "id": "product_3_name",
+          "label": "Product 3 name"
+        },
+        {
+          "type": "image_picker",
+          "id": "product_3_image",
+          "label": "Product 3 image"
+        },
+        {
+          "type": "header",
+          "content": "Pricing"
+        },
+        {
+          "type": "text",
+          "id": "original_price",
+          "label": "Original price (PKR, numbers only)",
+          "default": "4500"
+        },
+        {
+          "type": "text",
+          "id": "sale_price",
+          "label": "Bundle price (PKR, numbers only)",
+          "default": "3350"
+        },
+        {
+          "type": "text",
+          "id": "save_label",
+          "label": "Save label",
+          "default": "Save PKR 1,150"
+        },
+        {
+          "type": "header",
+          "content": "CTA"
+        },
+        {
+          "type": "url",
+          "id": "bundle_url",
+          "label": "Bundle product or collection URL"
+        },
+        {
+          "type": "range",
+          "id": "viewers",
+          "min": 3,
+          "max": 20,
+          "step": 1,
+          "label": "Viewers count",
+          "default": 8
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Bundles",
+      "blocks": [
+        {
+          "type": "bundle_card",
+          "settings": {
+            "badge": "BEST VALUE",
+            "bundle_name": "The Glow Starter Kit",
+            "tagline": "Cleanse · Treat · Protect",
+            "product_1_name": "Gentle Foaming Cleanser",
+            "product_2_name": "Revitalizing Face Serum",
+            "product_3_name": "Optimal Sunscreen Stick",
+            "original_price": "5849",
+            "sale_price": "4199",
+            "save_label": "Save PKR 1,650",
+            "viewers": 11
+          }
+        },
+        {
+          "type": "bundle_card",
+          "settings": {
+            "badge": "DAILY ESSENTIALS",
+            "bundle_name": "SPF + Serum Duo",
+            "tagline": "Your 2-step morning ritual",
+            "product_1_name": "Optimal Sunscreen Stick SPF 50+",
+            "product_2_name": "Revitalizing Face Serum",
+            "original_price": "4349",
+            "sale_price": "3349",
+            "save_label": "Save PKR 1,000",
+            "viewers": 7
+          }
+        },
+        {
+          "type": "bundle_card",
+          "settings": {
+            "badge": "HAIR + SKIN",
+            "bundle_name": "Full Body Ritual",
+            "tagline": "Scalp to face, head to toe",
+            "product_1_name": "Scalp Healing Oil",
+            "product_2_name": "Hyaluronic Face Serum",
+            "product_3_name": "Gentle Foaming Cleanser",
+            "original_price": "5450",
+            "sale_price": "3999",
+            "save_label": "Save PKR 1,451",
+            "viewers": 9
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
