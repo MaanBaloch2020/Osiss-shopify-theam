@@ -1,0 +1,63 @@
+{% comment %}
+  Snippet: wishlist-panel.liquid
+  Renders the off-canvas wishlist panel.
+  State is managed by theme.js (wishlist array, renderWishlist).
+  Place once in theme.liquid.
+{% endcomment %}
+
+<!-- Wishlist overlay -->
+<div
+  class="wl-ov"
+  id="wlOverlay"
+  aria-hidden="true"
+  role="presentation"
+></div>
+
+<!-- Wishlist panel -->
+<aside
+  class="wl-panel"
+  id="wlPanel"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Your wishlist"
+  aria-hidden="true"
+>
+
+  <div class="wl-hdr">
+    <div class="wl-ttl">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+      </svg>
+      WISHLIST
+    </div>
+    <button
+      class="ib"
+      id="wlClose"
+      aria-label="Close wishlist"
+      onclick="closeWishlist()"
+    >
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+        <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+      </svg>
+    </button>
+  </div>
+
+  <div class="wl-body" id="wlBody" aria-live="polite">
+    <!-- Populated by theme.js → renderWishlist() -->
+    <div style="padding:48px 0;text-align:center">
+      <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#ddd" stroke-width="1.5" aria-hidden="true">
+        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+      </svg>
+      <p style="font-size:11px;font-weight:700;letter-spacing:1.5px;color:#aaa;text-transform:uppercase;margin-top:14px">Your wishlist is empty</p>
+      <p style="font-size:10px;color:#ccc;margin-top:6px">Save products you love here</p>
+    </div>
+  </div>
+
+  <!-- Footer CTA -->
+  <div class="wl-foot">
+    <a href="/collections/all" class="btn-blk" style="display:block;text-align:center" onclick="closeWishlist()">
+      CONTINUE SHOPPING
+    </a>
+  </div>
+
+</aside>
